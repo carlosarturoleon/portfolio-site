@@ -20,4 +20,5 @@ from django.urls import path, include
 urlpatterns = [
     path('secure-admin-panel/', admin.site.urls),
     path('markdownx/', include('markdownx.urls')),
+    path('api/', include('blog.urls')),
 ]
