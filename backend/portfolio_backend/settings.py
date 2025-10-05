@@ -13,9 +13,57 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from pathlib import Path
 from decouple import config
 import os
+import environ
+import boto3
+import json
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Initialize environ
+env = environ.Env()
+
+# Load environment variables from .env file
+env_file = os.path.join(BASE_DIR.parent, '.env')
+if os.path.exists(env_file):
+    environ.Env.read_env(env_file)
+
+# Fetch secrets from AWS Secrets Manager
+def get_aws_secrets():
+    """Fetch secrets from AWS Secrets Manager"""
+    try:
+        secret_name = config('SECRET_MANAGER_NAME', default=None)
+        region_name = config('AWS_REGION', default='us-east-1')
+
+        if not secret_name:
+            return {}
+
+        # Create a Secrets Manager client
+        session = boto3.session.Session()
+        client = session.client(
+            service_name='secretsmanager',
+            region_name=region_name
+        )
+
+        # Fetch the secret value
+        get_secret_value_response = client.get_secret_value(SecretId=secret_name)
+
+        # Parse and return the secret
+        if 'SecretString' in get_secret_value_response:
+            secret = json.loads(get_secret_value_response['SecretString'])
+            return secret
+        return {}
+    except Exception as e:
+        print(f"Error fetching secrets from AWS Secrets Manager: {e}")
+        return {}
+
+# Get AWS credentials from Secrets Manager
+aws_secrets = get_aws_secrets()
+
+# AWS Configuration
+AWS_ACCESS_KEY_ID = aws_secrets.get('AWS_ACCESS_KEY_ID', config('AWS_ACCESS_KEY_ID', default=''))
+AWS_SECRET_ACCESS_KEY = aws_secrets.get('AWS_SECRET_ACCESS_KEY', config('AWS_SECRET_ACCESS_KEY', default=''))
+AWS_REGION = config('AWS_REGION', default='us-east-1')
 
 
 # Quick-start development settings - unsuitable for production
