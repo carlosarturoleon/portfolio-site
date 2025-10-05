@@ -9,6 +9,8 @@ class Author(models.Model):
     bio = models.TextField(blank=True)
     email = models.EmailField(unique=True)
     profile_image = models.URLField(max_length=500, blank=True)
+    created_date = models.DateTimeField(default=timezone.now)
+    updated_date = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.name
@@ -21,6 +23,8 @@ class Category(models.Model):
     name = models.CharField(max_length=100, unique=True)
     slug = models.SlugField(max_length=100, unique=True)
     description = models.TextField(blank=True)
+    created_date = models.DateTimeField(default=timezone.now)
+    updated_date = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.name
@@ -33,6 +37,8 @@ class Category(models.Model):
 class Tag(models.Model):
     name = models.CharField(max_length=50, unique=True)
     slug = models.SlugField(max_length=50, unique=True)
+    created_date = models.DateTimeField(default=timezone.now)
+    updated_date = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.name
@@ -48,6 +54,7 @@ class Post(models.Model):
     author = models.ForeignKey(Author, on_delete=models.CASCADE, related_name='posts')
     categories = models.ManyToManyField(Category, related_name='posts', blank=True)
     tags = models.ManyToManyField(Tag, related_name='posts', blank=True)
+    created_date = models.DateTimeField(default=timezone.now)
     published_date = models.DateTimeField(default=timezone.now)
     updated_date = models.DateTimeField(auto_now=True)
     is_published = models.BooleanField(default=False)
