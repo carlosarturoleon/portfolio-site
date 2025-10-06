@@ -1,0 +1,16 @@
+{{ site_name }} - Confirm Your Newsletter Subscription
+
+Thank you for subscribing to our newsletter!
+
+To complete your subscription and start receiving our updates, please confirm your email address by clicking the link below:
+
+{{ confirmation_url }}
+
+This link will expire in 24 hours.
+
+---
+
+You received this email because you signed up for {{ site_name }}.
+If you didn't request this, you can safely ignore this email.
+
+{{ site_url }}

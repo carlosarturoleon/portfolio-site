@@ -78,3 +78,33 @@ class PostSerializer(serializers.ModelSerializer):
         read_only_fields = ['created_date', 'updated_date']
 
 
+class PostMetadataSerializer(serializers.ModelSerializer):
+    """Serializer for Post metadata and Open Graph tags"""
+    author_name = serializers.CharField(source='author.name', read_only=True)
+    author_image = serializers.URLField(source='author.profile_image', read_only=True)
+    url = serializers.SerializerMethodField()
+    og_type = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Post
+        fields = [
+            'title',
+            'slug',
+            'meta_description',
+            'featured_image',
+            'author_name',
+            'author_image',
+            'published_date',
+            'reading_time',
+            'url',
+            'og_type',
+        ]
+
+    def get_url(self, obj):
+        request = self.context.get('request')
+        if request:
+            return f"{request.scheme}://{request.get_host()}/posts/{obj.slug}/"
+        return f"/posts/{obj.slug}/"
+
+    def get_og_type(self, obj):
+        return "article"

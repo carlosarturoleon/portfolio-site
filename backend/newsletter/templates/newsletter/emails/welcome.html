@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to {{ site_name }}</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 600px;
+            margin: 40px auto;
+            background: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #ffffff;
+            padding: 40px 30px;
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 28px;
+            font-weight: 600;
+        }
+        .content {
+            padding: 40px 30px;
+        }
+        .content h2 {
+            color: #333;
+            font-size: 22px;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+        .content p {
+            margin-bottom: 20px;
+            font-size: 16px;
+            color: #555;
+        }
+        .highlight-box {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 4px;
+        }
+        .highlight-box h3 {
+            margin-top: 0;
+            color: #667eea;
+            font-size: 18px;
+        }
+        .highlight-box ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        .highlight-box li {
+            margin: 8px 0;
+            color: #555;
+        }
+        .footer {
+            background: #f9f9f9;
+            padding: 30px;
+            text-align: center;
+            font-size: 14px;
+            color: #777;
+            border-top: 1px solid #eee;
+        }
+        .footer p {
+            margin: 5px 0;
+        }
+        .footer a {
+            color: #667eea;
+            text-decoration: none;
+        }
+        .unsubscribe {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+            font-size: 12px;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Welcome to {{ site_name }}! 🎉</h1>
+        </div>
+
+        <div class="content">
+            <h2>Thank you for confirming your subscription!</h2>
+
+            <p>We're excited to have you join our community. You'll now receive our latest updates, articles, and insights directly to your inbox.</p>
+
+            <div class="highlight-box">
+                <h3>What to expect:</h3>
+                <ul>
+                    <li>Latest blog posts and technical articles</li>
+                    <li>Web development tips and best practices</li>
+                    <li>Updates on new features and projects</li>
+                    <li>Exclusive content for subscribers</li>
+                </ul>
+            </div>
+
+            <p>We respect your inbox and promise to only send valuable content. You can manage your subscription preferences or unsubscribe at any time.</p>
+
+            <p style="margin-top: 30px;">Stay tuned for great content!</p>
+
+            <p style="margin-top: 20px; font-weight: 600;">Best regards,<br>The {{ site_name }} Team</p>
+        </div>
+
+        <div class="footer">
+            <p>You're receiving this because you confirmed your subscription to {{ site_name }}.</p>
+            <p><a href="{{ site_url }}">Visit our website</a></p>
+
+            <div class="unsubscribe">
+                <p>Don't want to receive these emails anymore?<br>
+                <a href="{{ unsubscribe_url }}">Unsubscribe</a></p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
