@@ -91,7 +91,9 @@ INSTALLED_APPS = [
     'corsheaders',
     'django_filters',
     'markdownx',
+    'django_ses',
     'blog',
+    'newsletter',
 ]
 
 MIDDLEWARE = [
@@ -224,3 +226,22 @@ MARKDOWNX_MARKDOWN_EXTENSION_CONFIGS = {
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Email Configuration (Amazon SES)
+EMAIL_BACKEND = 'django_ses.SESBackend'
+
+# Use ses-sender profile credentials for SES (overrides default AWS credentials)
+import boto3
+ses_session = boto3.Session(profile_name='ses-sender')
+ses_credentials = ses_session.get_credentials()
+
+# SES-specific credentials
+AWS_SES_ACCESS_KEY_ID = ses_credentials.access_key if ses_credentials else None
+AWS_SES_SECRET_ACCESS_KEY = ses_credentials.secret_key if ses_credentials else None
+AWS_SES_REGION_NAME = 'us-east-1'
+AWS_SES_REGION_ENDPOINT = 'email.us-east-1.amazonaws.com'
+DEFAULT_FROM_EMAIL = 'no-reply@carlosleon.tech'
+SITE_URL = 'https://carlosleon.tech'
+
+# Disable SES rate limit checks for local development
+AWS_SES_AUTO_THROTTLE = None

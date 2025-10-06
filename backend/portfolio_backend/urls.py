@@ -21,4 +21,5 @@ urlpatterns = [
     path('secure-admin-panel/', admin.site.urls),
     path('markdownx/', include('markdownx.urls')),
     path('api/', include('blog.urls')),
+    path('api/newsletter/', include('newsletter.urls')),
 ]

@@ -1,6 +1,6 @@
 from django.contrib import admin
 from markdownx.admin import MarkdownxModelAdmin
-from .models import Author, Category, Tag, Post, Subscriber
+from .models import Author, Category, Tag, Post
 
 
 @admin.register(Author)
@@ -67,10 +67,3 @@ class PostAdmin(MarkdownxModelAdmin):
     )
 
 
-@admin.register(Subscriber)
-class SubscriberAdmin(admin.ModelAdmin):
-    list_display = ('email', 'confirmed', 'subscribed_date', 'confirmed_date')
-    list_filter = ('confirmed', 'subscribed_date')
-    search_fields = ('email',)
-    readonly_fields = ('subscribed_date', 'confirmed_date')
-    ordering = ('-subscribed_date',)

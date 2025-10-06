@@ -78,20 +78,3 @@ class Post(models.Model):
         ]
 
 
-class Subscriber(models.Model):
-    email = models.EmailField(unique=True)
-    confirmed = models.BooleanField(default=False)
-    confirmation_token = models.CharField(max_length=100, blank=True)
-    subscribed_date = models.DateTimeField(default=timezone.now)
-    confirmed_date = models.DateTimeField(null=True, blank=True)
-
-    def __str__(self):
-        return self.email
-
-    class Meta:
-        ordering = ['-subscribed_date']
-        indexes = [
-            models.Index(fields=['confirmed']),
-            models.Index(fields=['-subscribed_date']),
-            models.Index(fields=['confirmed', '-subscribed_date']),  # Composite index
-        ]

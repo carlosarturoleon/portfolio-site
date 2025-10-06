@@ -1,13 +1,12 @@
 from rest_framework import generics, filters
 from rest_framework.pagination import PageNumberPagination
 from django_filters.rest_framework import DjangoFilterBackend
-from .models import Post, Author, Category, Tag, Subscriber
+from .models import Post, Author, Category, Tag
 from .serializers import (
     PostSerializer,
     AuthorSerializer,
     CategorySerializer,
-    TagSerializer,
-    SubscriberSerializer
+    TagSerializer
 )
 
 
@@ -125,23 +124,3 @@ class TagDetailAPIView(generics.RetrieveAPIView):
     lookup_field = 'slug'
 
 
-class SubscriberCreateAPIView(generics.CreateAPIView):
-    """
-    Create a new newsletter subscriber.
-
-    Handles POST requests to subscribe to the newsletter.
-    Validates email format and prevents duplicate subscriptions.
-
-    Returns:
-    - 201 Created: Successfully subscribed
-    - 400 Bad Request: Invalid email or duplicate subscription
-    """
-    queryset = Subscriber.objects.all()
-    serializer_class = SubscriberSerializer
-    permission_classes = []  # Allow unauthenticated users to subscribe
-
-    def perform_create(self, serializer):
-        """Generate confirmation token when creating a subscriber"""
-        import secrets
-        confirmation_token = secrets.token_urlsafe(32)
-        serializer.save(confirmation_token=confirmation_token)

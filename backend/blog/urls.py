@@ -8,7 +8,6 @@ from .views import (
     CategoryDetailAPIView,
     TagListAPIView,
     TagDetailAPIView,
-    SubscriberCreateAPIView,
 )
 
 app_name = 'blog'
@@ -29,7 +28,4 @@ urlpatterns = [
     # Tag endpoints
     path('tags/', TagListAPIView.as_view(), name='tag-list'),
     path('tags/<slug:slug>/', TagDetailAPIView.as_view(), name='tag-detail'),
-
-    # Subscriber endpoints
-    path('subscribers/', SubscriberCreateAPIView.as_view(), name='subscriber-create'),
 ]
