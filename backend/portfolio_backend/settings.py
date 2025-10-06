@@ -87,6 +87,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sitemaps',
     'rest_framework',
     'corsheaders',
     'django_filters',
@@ -205,6 +206,14 @@ REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': [
         'django_filters.rest_framework.DjangoFilterBackend',
     ],
+    'DEFAULT_THROTTLE_CLASSES': [
+        'rest_framework.throttling.AnonRateThrottle',
+    ],
+    'DEFAULT_THROTTLE_RATES': {
+        'anon': '100/hour',  # General API: 100 requests per hour per IP
+        'newsletter_subscribe': '5/hour',  # Newsletter subscription: 5 per hour per IP
+        'newsletter_confirm': '10/hour',  # Newsletter confirmation: 10 per hour per IP
+    },
 }
 
 # Markdownx Settings
@@ -228,20 +237,32 @@ MARKDOWNX_MARKDOWN_EXTENSION_CONFIGS = {
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Email Configuration (Amazon SES)
-EMAIL_BACKEND = 'django_ses.SESBackend'
+EMAIL_BACKEND = config('EMAIL_BACKEND', default='django_ses.SESBackend')
 
-# Use ses-sender profile credentials for SES (overrides default AWS credentials)
-import boto3
-ses_session = boto3.Session(profile_name='ses-sender')
-ses_credentials = ses_session.get_credentials()
+# SES credentials configuration
+# Priority: 1) Environment variables, 2) AWS profile (local dev with volume mount)
+AWS_SES_ACCESS_KEY_ID = config('AWS_SES_ACCESS_KEY_ID', default=None)
+AWS_SES_SECRET_ACCESS_KEY = config('AWS_SES_SECRET_ACCESS_KEY', default=None)
 
-# SES-specific credentials
-AWS_SES_ACCESS_KEY_ID = ses_credentials.access_key if ses_credentials else None
-AWS_SES_SECRET_ACCESS_KEY = ses_credentials.secret_key if ses_credentials else None
-AWS_SES_REGION_NAME = 'us-east-1'
-AWS_SES_REGION_ENDPOINT = 'email.us-east-1.amazonaws.com'
-DEFAULT_FROM_EMAIL = 'no-reply@carlosleon.tech'
-SITE_URL = 'https://carlosleon.tech'
+# If no env credentials, try AWS profile (only works with ~/.aws volume mount)
+if not AWS_SES_ACCESS_KEY_ID:
+    AWS_SES_PROFILE = config('AWS_SES_PROFILE', default=None)
+    if AWS_SES_PROFILE:
+        try:
+            import boto3
+            ses_session = boto3.Session(profile_name=AWS_SES_PROFILE)
+            ses_credentials = ses_session.get_credentials()
+            if ses_credentials:
+                AWS_SES_ACCESS_KEY_ID = ses_credentials.access_key
+                AWS_SES_SECRET_ACCESS_KEY = ses_credentials.secret_key
+        except Exception as e:
+            print(f"Warning: Could not load SES credentials from profile '{AWS_SES_PROFILE}': {e}")
 
-# Disable SES rate limit checks for local development
-AWS_SES_AUTO_THROTTLE = None
+# SES configuration
+AWS_SES_REGION_NAME = config('AWS_SES_REGION_NAME')
+AWS_SES_REGION_ENDPOINT = config('AWS_SES_REGION_ENDPOINT')
+DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL')
+SITE_URL = config('SITE_URL')
+
+# SES throttling (None = disabled)
+AWS_SES_AUTO_THROTTLE = config('AWS_SES_AUTO_THROTTLE', default=None)

@@ -2,6 +2,7 @@ from django.urls import path
 from .views import (
     PostListAPIView,
     PostDetailAPIView,
+    PostMetadataAPIView,
     AuthorListAPIView,
     AuthorDetailAPIView,
     CategoryListAPIView,
@@ -16,6 +17,7 @@ urlpatterns = [
     # Post endpoints
     path('posts/', PostListAPIView.as_view(), name='post-list'),
     path('posts/<slug:slug>/', PostDetailAPIView.as_view(), name='post-detail'),
+    path('posts/<slug:slug>/metadata/', PostMetadataAPIView.as_view(), name='post-metadata'),
 
     # Author endpoints
     path('authors/', AuthorListAPIView.as_view(), name='author-list'),

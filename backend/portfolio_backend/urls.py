@@ -16,10 +16,20 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.contrib.sitemaps.views import sitemap
+from .sitemaps import BlogPostSitemap, StaticViewSitemap
+from .views import robots_txt
+
+sitemaps = {
+    'blog': BlogPostSitemap,
+    'static': StaticViewSitemap,
+}
 
 urlpatterns = [
     path('secure-admin-panel/', admin.site.urls),
     path('markdownx/', include('markdownx.urls')),
     path('api/', include('blog.urls')),
     path('api/newsletter/', include('newsletter.urls')),
+    path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
+    path('robots.txt', robots_txt, name='robots_txt'),
 ]

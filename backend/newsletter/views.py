@@ -7,6 +7,7 @@ from rest_framework.views import APIView
 from .models import Subscriber, SubscriptionToken
 from .serializers import SubscribeSerializer
 from .utils import send_confirmation_email, send_welcome_email
+from .throttles import NewsletterSubscribeThrottle, NewsletterConfirmThrottle
 
 
 class SubscribeAPIView(generics.CreateAPIView):
@@ -15,9 +16,12 @@ class SubscribeAPIView(generics.CreateAPIView):
 
     POST /api/newsletter/subscribe/
     Body: {"email": "user@example.com"}
+
+    Rate limit: 5 requests per hour per IP
     """
     serializer_class = SubscribeSerializer
     permission_classes = [AllowAny]
+    throttle_classes = [NewsletterSubscribeThrottle]
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -48,8 +52,11 @@ class ConfirmSubscriptionAPIView(APIView):
     Confirm newsletter subscription
 
     GET /api/newsletter/confirm/<token>/
+
+    Rate limit: 10 requests per hour per IP
     """
     permission_classes = [AllowAny]
+    throttle_classes = [NewsletterConfirmThrottle]
 
     def get(self, request, token):
         subscription_token = get_object_or_404(SubscriptionToken, token=token, token_type='confirm')

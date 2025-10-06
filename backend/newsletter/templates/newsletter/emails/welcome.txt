@@ -1,0 +1,26 @@
+Welcome to {{ site_name }}!
+
+Thank you for confirming your subscription!
+
+We're excited to have you join our community. You'll now receive our latest updates, articles, and insights directly to your inbox.
+
+What to expect:
+- Latest blog posts and technical articles
+- Web development tips and best practices
+- Updates on new features and projects
+- Exclusive content for subscribers
+
+We respect your inbox and promise to only send valuable content. You can manage your subscription preferences or unsubscribe at any time.
+
+Stay tuned for great content!
+
+Best regards,
+The {{ site_name }} Team
+
+---
+
+You're receiving this because you confirmed your subscription to {{ site_name }}.
+Visit our website: {{ site_url }}
+
+Don't want to receive these emails anymore?
+Unsubscribe: {{ unsubscribe_url }}

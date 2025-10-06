@@ -4,6 +4,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from .models import Post, Author, Category, Tag
 from .serializers import (
     PostSerializer,
+    PostMetadataSerializer,
     AuthorSerializer,
     CategorySerializer,
     TagSerializer
@@ -124,3 +125,20 @@ class TagDetailAPIView(generics.RetrieveAPIView):
     lookup_field = 'slug'
 
 
+class PostMetadataAPIView(generics.RetrieveAPIView):
+    """
+    Retrieve Open Graph metadata for a post by slug.
+
+    Returns metadata suitable for Open Graph tags:
+    - title, description, image
+    - author information
+    - URL and type (article)
+    """
+    serializer_class = PostMetadataSerializer
+    lookup_field = 'slug'
+
+    def get_queryset(self):
+        """Only return published posts"""
+        return Post.objects.filter(
+            is_published=True
+        ).select_related('author')
