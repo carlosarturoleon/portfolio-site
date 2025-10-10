@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.views.decorators.http import require_GET
 
 
@@ -17,3 +17,13 @@ def robots_txt(request):
         f"Sitemap: {request.scheme}://{request.get_host()}/sitemap.xml",
     ]
     return HttpResponse("\n".join(lines), content_type="text/plain")
+
+
+@require_GET
+def health_check(request):
+    """API health check endpoint"""
+    return JsonResponse({
+        "status": "ok",
+        "message": "Django backend is running",
+        "version": "1.0.0"
+    })

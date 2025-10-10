@@ -1,0 +1,103 @@
+@import "tailwindcss";
+
+@theme inline {
+  /* Neutral Colors */
+  --color-neutral-900: #030303;
+  --color-neutral-400: #6A6662;
+  --color-neutral-200: #FFF7F0;
+  --color-neutral-0: #FFFFFF;
+
+  /* Brand Colors */
+  --color-brand-red-500: #E16B5B;
+  --color-brand-blue-500: #755CDE;
+  --color-brand-yellow-500: #F6A560;
+  --color-brand-pink-500: #F39E9E;
+  --color-brand-cyan-500: #61C4B7;
+  --color-brand-purple-500: #552049;
+
+  /* Spacing Scale */
+  --spacing-0: 0px;
+  --spacing-025: 2px;
+  --spacing-050: 4px;
+  --spacing-075: 6px;
+  --spacing-100: 8px;
+  --spacing-150: 12px;
+  --spacing-200: 16px;
+  --spacing-250: 20px;
+  --spacing-300: 24px;
+  --spacing-400: 32px;
+  --spacing-500: 40px;
+  --spacing-600: 48px;
+  --spacing-800: 64px;
+  --spacing-1000: 80px;
+
+  /* Border Radius */
+  --radius-0: 0px;
+  --radius-4: 4px;
+  --radius-6: 6px;
+  --radius-8: 8px;
+  --radius-10: 10px;
+  --radius-12: 12px;
+  --radius-16: 16px;
+  --radius-20: 20px;
+  --radius-24: 24px;
+  --radius-full: 999px;
+
+  /* Typography - Font Family */
+  --font-jakarta: 'Plus Jakarta Sans', sans-serif;
+}
+
+body {
+  font-family: var(--font-jakarta);
+  color: var(--color-neutral-900);
+  background: var(--color-neutral-0);
+}
+
+/* Typography Utility Classes */
+.text-1 {
+  font-family: var(--font-jakarta);
+  font-weight: 700;
+  font-size: 56px;
+  line-height: 130%;
+  letter-spacing: 0px;
+}
+
+.text-1-mobile {
+  font-family: var(--font-jakarta);
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 120%;
+  letter-spacing: 0px;
+}
+
+.text-2 {
+  font-family: var(--font-jakarta);
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 130%;
+  letter-spacing: 0px;
+}
+
+.text-3 {
+  font-family: var(--font-jakarta);
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 130%;
+  letter-spacing: 0px;
+}
+
+.text-4 {
+  font-family: var(--font-jakarta);
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 150%;
+  letter-spacing: 0px;
+}
+
+.text-5 {
+  font-family: var(--font-jakarta);
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 150%;
+  letter-spacing: 0px;
+}
