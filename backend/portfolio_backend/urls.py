@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.contrib.sitemaps.views import sitemap
 from .sitemaps import BlogPostSitemap, StaticViewSitemap
-from .views import robots_txt
+from .views import robots_txt, health_check
 
 sitemaps = {
     'blog': BlogPostSitemap,
@@ -28,6 +28,7 @@ sitemaps = {
 urlpatterns = [
     path('secure-admin-panel/', admin.site.urls),
     path('markdownx/', include('markdownx.urls')),
+    path('api/health', health_check, name='health_check'),
     path('api/', include('blog.urls')),
     path('api/newsletter/', include('newsletter.urls')),
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
