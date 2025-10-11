@@ -30,6 +30,8 @@
   --spacing-600: 48px;
   --spacing-800: 64px;
   --spacing-1000: 80px;
+  --spacing-1200: 96px;
+  --spacing-1400: 112px;
 
   /* Border Radius */
   --radius-0: 0px;
@@ -51,6 +53,67 @@ body {
   font-family: var(--font-jakarta);
   color: var(--color-neutral-900);
   background: var(--color-neutral-0);
+  scroll-behavior: smooth;
+}
+
+/* Container Margin Utility - Horizontal spacing using margin */
+.container-margin {
+  margin-left: var(--spacing-200);
+  margin-right: var(--spacing-200);
+}
+
+@media (min-width: 48rem) {
+  .container-margin {
+    margin-left: var(--spacing-400);
+    margin-right: var(--spacing-400);
+  }
+}
+
+@media (min-width: 64rem) {
+  .container-margin {
+    margin-left: var(--spacing-1400);
+    margin-right: var(--spacing-1400);
+  }
+}
+
+/* Container Padding Utility - Horizontal Only */
+.container-padding {
+  padding-left: var(--spacing-200);
+  padding-right: var(--spacing-200);
+}
+
+@media (min-width: 48rem) {
+  .container-padding {
+    padding-left: var(--spacing-400);
+    padding-right: var(--spacing-400);
+  }
+}
+
+@media (min-width: 64rem) {
+  .container-padding {
+    padding-left: var(--spacing-1400);
+    padding-right: var(--spacing-1400);
+  }
+}
+
+/* Section Vertical Spacing - Margin Bottom Only */
+.section-spacing {
+  margin-bottom: var(--spacing-800);
+}
+
+@media (min-width: 48rem) {
+  .section-spacing {
+    margin-bottom: var(--spacing-1000);
+  }
+}
+
+/* Custom Spacing Utilities */
+.w-spacing-800 {
+  width: var(--spacing-800);
+}
+
+.h-spacing-800 {
+  height: var(--spacing-800);
 }
 
 /* Typography Utility Classes */
