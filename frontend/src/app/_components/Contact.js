@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 export default function Contact() {
   return (
-    <section className="container-margin container-padding py-800" id="contact">
+    <section className="pt-800 pb-400" id="contact">
       <div className="bg-neutral-900 rounded-10 md:rounded-16 px-300 py-500 md:px-800 md:py-600 text-center md:text-left">
         <div className="mx-auto md:mx-0" style={{ maxWidth: '540px' }}>
           <h2 className="text-2 text-neutral-0 mb-300">
