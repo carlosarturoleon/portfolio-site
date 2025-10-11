@@ -47,7 +47,7 @@ const services = [
 
 export default function Hero() {
   return (
-    <section className="container-margin container-padding py-400">
+    <section className="py-400">
       {/* Hero Heading */}
       <div className="text-center mb-500 md:mb-800">
         <h1 className="text-1 md:text-1 text-neutral-900 mb-200 md:mb-300">
