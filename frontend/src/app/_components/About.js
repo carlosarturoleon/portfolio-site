@@ -7,7 +7,7 @@ export default function About() {
       <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-1000 md:gap-400 lg:gap-1600 items-center">
         {/* Profile Image */}
         <div className="relative flex justify-center md:justify-center lg:justify-start">
-          <div className="relative w-full md:w-1/2 lg:w-full aspect-square">
+          <div className="relative w-4/5 md:w-1/2 lg:w-full aspect-square">
             <Image
               src="/images/image-amy.webp"
               alt="Amy - Designer"
@@ -19,7 +19,7 @@ export default function About() {
         </div>
 
         {/* About Text */}
-        <div className="text-center md:text-center lg:text-left max-w-[540px] md:max-w-full md:mx-auto lg:mx-0 lg:max-w-[540px]">
+        <div className="text-center md:text-center lg:text-left max-w-[540px] mx-auto md:max-w-full lg:mx-0 lg:max-w-[540px]">
           <h2 className="text-2 text-neutral-900 mb-300 md:mb-400">
             I'm Amy, and I'd love to work on your next project
           </h2>
