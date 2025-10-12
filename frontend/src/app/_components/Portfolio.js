@@ -34,7 +34,7 @@ export default function Portfolio() {
         {/* Slides Container */}
         <div className="overflow-hidden">
           <div
-            className="flex transition-transform ease-in-out"
+            className="flex items-stretch transition-transform ease-in-out"
             style={{ transform: `translateX(-${currentSlide * (100 / itemsPerView)}%)`, transitionDuration: '500ms' }}
           >
             {slides.map((slide, index) => {
@@ -42,9 +42,9 @@ export default function Portfolio() {
               return (
                 <div
                   key={slide.id}
-                  className={`flex justify-center items-center px-200 md:px-300 ${isCenter ? 'min-w-[40%]' : 'min-w-[30%]'}`}
+                  className={`px-200 md:px-300 ${isCenter ? 'min-w-[40%] md:min-w-[60%] lg:min-w-[40%]' : 'min-w-[30%] md:min-w-[25%] lg:min-w-[30%]'} self-stretch flex items-center`}
                 >
-                  <div className={`relative rounded-10 w-full ${isCenter ? 'aspect-[4/3]' : 'aspect-square'}`}>
+                  <div className={`relative rounded-10 w-full aspect-square ${isCenter ? 'md:aspect-[4/3]' : 'md:aspect-auto md:h-full lg:aspect-square'}`}>
                     <Image
                       src={slide.image}
                       alt={slide.alt}
