@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import Button from './Button';
 
 export default function Footer() {
   return (
@@ -14,12 +15,7 @@ export default function Footer() {
           />
         </Link>
 
-        <Link
-          href="#contact"
-          className="bg-neutral-900 text-neutral-0 text-5 px-300 py-100 md:px-500 md:py-150 rounded-full hover:bg-brand-blue-500 transition-colors"
-        >
-          Free Consultation
-        </Link>
+        <Button variant="dark" />
       </div>
     </footer>
   );
