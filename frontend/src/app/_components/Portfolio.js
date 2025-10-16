@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 import { useState } from 'react';
 
 const slides = [
@@ -26,7 +27,9 @@ export default function Portfolio() {
   return (
     <section className="-mx-200 md:-mx-400 lg:-mx-1600">
       <div className="text-center mb-500 px-200 md:px-400">
-        <h2 className="text-2 text-neutral-900">My Work</h2>
+        <Link href="/projects" className="text-2 text-neutral-900 hover:text-brand-blue-500 transition-colors inline-block">
+          My Work
+        </Link>
       </div>
 
       {/* Carousel */}
