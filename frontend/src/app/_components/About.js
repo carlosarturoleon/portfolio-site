@@ -9,7 +9,7 @@ export default function About() {
         <div className="relative flex justify-center md:justify-center lg:justify-start">
           <div className="relative w-4/5 md:w-1/2 lg:w-4/5 aspect-square">
             <Image
-              src="/images/image-amy.webp"
+              src="/images/profile.png"
               alt="Amy - Designer"
               fill
               className="rounded-full object-cover"

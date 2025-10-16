@@ -4,7 +4,7 @@ const services = [
   {
     title: "Data Analytics",
     bgColor: "bg-brand-blue-500",
-    pattern: "/images/pattern-graphic-design.svg",
+    pattern: "/images/data-analytics.png",
     textColor: "text-neutral-0",
     gridClass: "col-span-2 row-span-2 lg:col-span-2 lg:row-span-2",
     order: "order-1",
@@ -12,7 +12,7 @@ const services = [
   {
     title: "Blog",
     bgColor: "bg-brand-yellow-500",
-    pattern: "/images/pattern-ui-ux.svg",
+    pattern: "/images/blog.png",
     textColor: "text-neutral-0",
     gridClass: "col-span-1 row-span-1 lg:col-span-1 lg:row-span-1",
     order: "order-2",
@@ -20,7 +20,7 @@ const services = [
   {
     title: "My Work",
     bgColor: "bg-brand-pink-500",
-    pattern: "/images/pattern-apps.svg",
+    pattern: "/images/portfolio.png",
     textColor: "text-neutral-0",
     gridClass: "col-span-1 row-span-1 lg:col-span-1 lg:row-span-1",
     order: "order-3",
@@ -28,7 +28,7 @@ const services = [
   {
     title: "Data Engineering",
     bgColor: "bg-brand-red-500",
-    pattern: "/images/pattern-illustrations.svg",
+    pattern: "/images/data-engineer.png",
     textColor: "text-neutral-0",
     gridClass: "col-span-2 row-span-1 lg:col-span-2 lg:row-span-1",
     order: "order-4 md:order-4 lg:order-5",
@@ -36,7 +36,7 @@ const services = [
   {
     title: "Technical Consulting",
     bgColor: "bg-brand-cyan-500",
-    pattern: "/images/pattern-photography.svg",
+    pattern: "/images/technical-consultations.png",
     textColor: "text-neutral-0",
     gridClass: "col-span-2 row-span-1 lg:col-span-2 lg:row-span-1",
     order: "order-5 md:order-5 lg:order-4",
@@ -44,7 +44,7 @@ const services = [
   {
     title: "Software Development",
     bgColor: "bg-brand-purple-500",
-    pattern: "/images/pattern-motion-graphics.svg",
+    pattern: "/images/software-development.png",
     textColor: "text-neutral-0",
     gridClass: "col-span-2 row-span-1 lg:col-span-2 lg:row-span-1",
     order: "order-6 md:order-6 lg:order-6",
@@ -92,7 +92,7 @@ export default function Hero() {
               className={`absolute aspect-square ${
                 service.gridClass.includes("col-span-2") &&
                 service.gridClass.includes("row-span-2")
-                  ? "-right-200 top-300"
+                  ? "right-300 top-300"
                   : service.gridClass.includes("col-span-2") &&
                     !service.gridClass.includes("row-span-2")
                   ? "right-300 w-1/3 -top-100"
