@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 const services = [
   {
@@ -16,6 +17,7 @@ const services = [
     textColor: "text-neutral-0",
     gridClass: "col-span-1 row-span-1 lg:col-span-1 lg:row-span-1",
     order: "order-2",
+    href: "/blog",
   },
   {
     title: "My Work",
@@ -24,6 +26,7 @@ const services = [
     textColor: "text-neutral-0",
     gridClass: "col-span-1 row-span-1 lg:col-span-1 lg:row-span-1",
     order: "order-3",
+    href: "/projects",
   },
   {
     title: "Data Engineering",
@@ -73,51 +76,70 @@ export default function Hero() {
 
       {/* Services Grid */}
       <div className="grid grid-cols-2 grid-rows-6 md:grid-cols-4 md:grid-rows-none lg:grid-cols-6 gap-200 md:gap-150 lg:gap-300">
-        {services.map((service, index) => (
-          <div
-            key={index}
-            className={`${service.bgColor} ${service.gridClass} ${
-              service.order
-            } rounded-8 md:rounded-16 p-300 flex flex-col justify-between items-start relative overflow-hidden hover:opacity-90 transition-opacity cursor-pointer ${
-              service.gridClass.includes("col-span-1")
-                ? "aspect-square lg:aspect-auto lg:self-stretch"
-                : service.gridClass.includes("col-span-2") &&
-                  !service.gridClass.includes("row-span-2")
-                ? "aspect-[2/1]"
-                : ""
-            }`}
-            style={{ minHeight: "150px" }}
-          >
-            <div
-              className={`absolute aspect-square ${
-                service.gridClass.includes("col-span-2") &&
-                service.gridClass.includes("row-span-2")
-                  ? "right-300 top-300"
-                  : service.gridClass.includes("col-span-2") &&
-                    !service.gridClass.includes("row-span-2")
-                  ? "right-300 w-1/3 -top-100"
-                  : "right-300 top-300"
-              }`}
-              style={{
-                width:
+        {services.map((service, index) => {
+          const content = (
+            <>
+              <div
+                className={`absolute aspect-square ${
                   service.gridClass.includes("col-span-2") &&
                   service.gridClass.includes("row-span-2")
-                    ? "55%"
-                    : "35%",
-              }}
+                    ? "right-300 top-300"
+                    : service.gridClass.includes("col-span-2") &&
+                      !service.gridClass.includes("row-span-2")
+                    ? "right-300 w-1/3 -top-100"
+                    : "right-300 top-300"
+                }`}
+                style={{
+                  width:
+                    service.gridClass.includes("col-span-2") &&
+                    service.gridClass.includes("row-span-2")
+                      ? "55%"
+                      : "35%",
+                }}
+              >
+                <Image
+                  src={service.pattern}
+                  alt=""
+                  fill
+                  className="object-contain"
+                />
+              </div>
+              <h3 className={`text-3 ${service.textColor} relative z-10 mt-auto`}>
+                {service.title}
+              </h3>
+            </>
+          );
+
+          const className = `${service.bgColor} ${service.gridClass} ${
+            service.order
+          } rounded-8 md:rounded-16 p-300 flex flex-col justify-between items-start relative overflow-hidden hover:opacity-90 transition-opacity cursor-pointer ${
+            service.gridClass.includes("col-span-1")
+              ? "aspect-square lg:aspect-auto lg:self-stretch"
+              : service.gridClass.includes("col-span-2") &&
+                !service.gridClass.includes("row-span-2")
+              ? "aspect-[2/1]"
+              : ""
+          }`;
+
+          return service.href ? (
+            <Link
+              key={index}
+              href={service.href}
+              className={className}
+              style={{ minHeight: "150px" }}
             >
-              <Image
-                src={service.pattern}
-                alt=""
-                fill
-                className="object-contain"
-              />
+              {content}
+            </Link>
+          ) : (
+            <div
+              key={index}
+              className={className}
+              style={{ minHeight: "150px" }}
+            >
+              {content}
             </div>
-            <h3 className={`text-3 ${service.textColor} relative z-10 mt-auto`}>
-              {service.title}
-            </h3>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </section>
   );

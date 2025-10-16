@@ -32,7 +32,7 @@ export default function About() {
             web applications that reduce manual work by 70%+ and deliver
             measurable ROI.
           </p>
-          <Button />
+          <Button href="/about">About</Button>
         </div>
       </div>
     </section>
