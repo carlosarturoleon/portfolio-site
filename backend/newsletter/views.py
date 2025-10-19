@@ -39,12 +39,25 @@ class SubscribeAPIView(generics.CreateAPIView):
             )
 
         # Send confirmation email
-        send_confirmation_email(subscriber)
-
-        return Response(
-            {'message': 'Confirmation email sent. Please check your inbox.'},
-            status=status.HTTP_201_CREATED
-        )
+        try:
+            send_confirmation_email(subscriber)
+            return Response(
+                {'message': 'Confirmation email sent. Please check your inbox.'},
+                status=status.HTTP_201_CREATED
+            )
+        except Exception as e:
+            # Handle email sending errors gracefully
+            error_msg = str(e)
+            if 'Email address is not verified' in error_msg or 'MessageRejected' in error_msg:
+                return Response(
+                    {'message': 'Email service is currently in development mode. Please contact the administrator to enable your subscription.'},
+                    status=status.HTTP_503_SERVICE_UNAVAILABLE
+                )
+            else:
+                return Response(
+                    {'message': 'Unable to send confirmation email. Please try again later.'},
+                    status=status.HTTP_500_INTERNAL_SERVER_ERROR
+                )
 
 
 class ConfirmSubscriptionAPIView(APIView):
@@ -75,8 +88,12 @@ class ConfirmSubscriptionAPIView(APIView):
 
         subscription_token.mark_as_used()
 
-        # Send welcome email
-        send_welcome_email(subscriber)
+        # Send welcome email (don't fail if email sending fails)
+        try:
+            send_welcome_email(subscriber)
+        except Exception as e:
+            # Log error but don't fail the confirmation
+            print(f"Error sending welcome email: {e}")
 
         return Response(
             {'message': 'Subscription confirmed successfully!'},

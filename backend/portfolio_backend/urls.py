@@ -31,6 +31,7 @@ urlpatterns = [
     path('api/health', health_check, name='health_check'),
     path('api/', include('blog.urls')),
     path('api/newsletter/', include('newsletter.urls')),
+    path('api/contact/', include('contact.urls')),
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
     path('robots.txt', robots_txt, name='robots_txt'),
 ]

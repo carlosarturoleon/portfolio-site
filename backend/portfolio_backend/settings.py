@@ -95,6 +95,7 @@ INSTALLED_APPS = [
     'django_ses',
     'blog',
     'newsletter',
+    'contact',
 ]
 
 MIDDLEWARE = [
@@ -213,6 +214,7 @@ REST_FRAMEWORK = {
         'anon': '100/hour',  # General API: 100 requests per hour per IP
         'newsletter_subscribe': '5/hour',  # Newsletter subscription: 5 per hour per IP
         'newsletter_confirm': '10/hour',  # Newsletter confirmation: 10 per hour per IP
+        'contact_submit': '3/hour',  # Contact form: 3 submissions per hour per IP
     },
 }
 
@@ -237,7 +239,11 @@ MARKDOWNX_MARKDOWN_EXTENSION_CONFIGS = {
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Email Configuration (Amazon SES)
-EMAIL_BACKEND = config('EMAIL_BACKEND', default='django_ses.SESBackend')
+# Use console backend in DEBUG mode for development testing, SES in production
+if DEBUG:
+    EMAIL_BACKEND = config('EMAIL_BACKEND', default='django.core.mail.backends.console.EmailBackend')
+else:
+    EMAIL_BACKEND = config('EMAIL_BACKEND', default='django_ses.SESBackend')
 
 # SES credentials configuration
 # Priority: 1) Environment variables, 2) AWS profile (local dev with volume mount)
@@ -266,3 +272,6 @@ SITE_URL = config('SITE_URL')
 
 # SES throttling (None = disabled)
 AWS_SES_AUTO_THROTTLE = config('AWS_SES_AUTO_THROTTLE', default=None)
+
+# Slack Configuration
+SLACK_WEBHOOK_URL = config('SLACK_WEBHOOK_URL', default=None)

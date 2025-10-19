@@ -43,6 +43,40 @@ export default function BlogPostDetail({ post }) {
       })
     : null;
 
+  // Get dynamic CTA content based on post category
+  const getCTAContent = (categories) => {
+    const categoryName = categories[0].name.toLowerCase();
+
+    if (categoryName.includes('data analytics') || categoryName.includes('analytics')) {
+      return {
+        heading: 'Transform Your Data into Revenue Driving Insights',
+        description: "I help businesses unlock the full potential of their data from pipeline optimization to custom transformation workflows that deliver measurable ROI. Whether you're struggling with data silos or need scalable analytics infrastructure, let's build a solution tailored to your goals.",
+      };
+    }
+
+    if (categoryName.includes('software development') || categoryName.includes('development') || categoryName.includes('software')) {
+      return {
+        heading: 'Bring Your Next Web Project to Life',
+        description: "I build robust, scalable web applications using modern full stack technologies. Whether you need a customer facing portal, an internal dashboard, or a complex SaaS platform, I deliver end to end solutions with clean code, maintainable architecture, and seamless user experiences.",
+      };
+    }
+
+    if (categoryName.includes('data engineering') || categoryName.includes('engineering')) {
+      return {
+        heading: 'Build Data Infrastructure That Scales with Your Business',
+        description: "I architect enterprise grade data pipelines that are built for performance, cost efficiency, and long term growth. Stop wasting budget on inefficient workflows get a data engineering solution designed to handle your toughest challenges and scale as you grow.",
+      };
+    }
+
+    // Default fallback
+    return {
+      heading: "Let's Build Something Great Together",
+      description: "Whether you need analytics infrastructure, custom web applications, or scalable data pipelines, I deliver end to end solutions that drive real business results. Let's discuss how I can help solve your technical challenges and accelerate your growth.",
+    };
+  };
+
+  const ctaContent = getCTAContent(categories);
+
   return (
     <article className="max-w-[800px] mx-auto">
       {/* Breadcrumb Navigation */}
@@ -53,20 +87,6 @@ export default function BlogPostDetail({ post }) {
         <span className="mx-100">/</span>
         <span className="text-neutral-900">{title}</span>
       </nav>
-
-      {/* Categories */}
-      {categories.length > 0 && (
-        <div className="flex flex-wrap gap-100 mb-300">
-          {categories.map((category) => (
-            <span
-              key={category.id}
-              className="inline-block text-6 text-brand-blue-500 bg-brand-blue-50 px-200 py-050 rounded"
-            >
-              {category.name}
-            </span>
-          ))}
-        </div>
-      )}
 
       {/* Title */}
       <h1 className="text-1 text-neutral-900 mb-300">{title}</h1>
@@ -103,6 +123,20 @@ export default function BlogPostDetail({ post }) {
           </div>
         </div>
       </div>
+
+      {/* Categories */}
+      {categories.length > 0 && (
+        <div className="flex flex-wrap gap-100 mb-300">
+          {categories.map((category) => (
+            <span
+              key={category.id}
+              className="inline-block text-6 text-brand-blue-500 bg-brand-blue-50 px-200 py-050 rounded"
+            >
+              {category.name}
+            </span>
+          ))}
+        </div>
+      )}
 
       {/* Featured Image */}
       {featured_image && (
@@ -226,6 +260,30 @@ export default function BlogPostDetail({ post }) {
           </div>
         </div>
       )}
+
+      {/* Call-to-Action Section */}
+      <div className="mt-800 p-600 bg-brand-blue-50 rounded-lg border border-brand-blue-100">
+        <h3 className="text-3 text-neutral-900 font-bold mb-300">
+          {ctaContent.heading}
+        </h3>
+        <p className="text-5 text-neutral-700 mb-400 leading-relaxed">
+          {ctaContent.description}
+        </p>
+        <div className="flex flex-wrap gap-300">
+          <Link
+            href="/contact"
+            className="inline-block bg-brand-blue-500 text-white text-5 font-medium px-400 py-200 rounded-lg hover:bg-brand-blue-600 transition-colors"
+          >
+            Schedule a Consultation
+          </Link>
+          <Link
+            href="/projects"
+            className="inline-block bg-white text-brand-blue-500 text-5 font-medium px-400 py-200 rounded-lg border border-brand-blue-500 hover:bg-brand-blue-50 transition-colors"
+          >
+            View My Work
+          </Link>
+        </div>
+      </div>
 
       {/* Author Bio */}
       {author?.bio && (

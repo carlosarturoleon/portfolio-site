@@ -4,7 +4,7 @@ import BlogPostList from '../_components/BlogPostList';
 
 export const metadata = {
   title: 'Blog - Carlos Leon',
-  description: 'Read articles and insights from Carlos Leon on software engineering, web development, and technology.',
+  description: 'Read articles and insights from Carlos Leon on data analytics, software engineering, and data engineering.',
 };
 
 export default function BlogPage() {
@@ -16,7 +16,7 @@ export default function BlogPage() {
           <div className="mb-600">
             <h1 className="text-1 text-neutral-900 mb-200">Blog</h1>
             <p className="text-4 text-neutral-600">
-              Insights on software engineering, web development, and technology
+              Insights on data anlytics, software engineering, and data engineering.
             </p>
           </div>
 
