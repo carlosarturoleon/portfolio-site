@@ -66,7 +66,7 @@ export default function Header() {
         </nav>
 
         {/* Get Started Button */}
-        <Button variant="dark" />
+        <Button variant="dark" href="/contact">Get Started</Button>
 
         {/* Mobile Menu Overlay */}
         {mobileMenuOpen && (

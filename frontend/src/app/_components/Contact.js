@@ -7,15 +7,15 @@ export default function Contact() {
         <div className="flex flex-col lg:grid lg:grid-cols-3 gap-300 md:gap-400">
           <div className="text-center md:text-left lg:col-span-2">
             <h2 className="text-2 text-neutral-0 mb-300">
-              Let's Discuss Your Project
+              Ready to Transform Your Data into Results?
             </h2>
             <p className="text-4 text-neutral-0 mb-300 lg:mb-0">
-              Let's explore how we can work together. Provide an overview of your
-              current situation and objectives, and I'll get back to you with insights on how to move forward.
+              Let's discuss how my expertise in data analytics, software development,
+              and data engineering can help you achieve your business goals. Get a response within 24 hours.
             </p>
           </div>
           <div className="flex items-center justify-center">
-            <Button />
+            <Button href="/contact">Get Started</Button>
           </div>
         </div>
       </div>

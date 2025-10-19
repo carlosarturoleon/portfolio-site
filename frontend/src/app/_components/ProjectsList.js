@@ -3,20 +3,21 @@
 import { useEffect, useRef, useState } from 'react';
 import BlogPostCard from './BlogPostCard';
 import SearchBar from './SearchBar';
-import { usePosts } from '../../lib/hooks/usePosts';
+import { useProjectPosts } from '../../lib/hooks/useProjectPosts';
 
 /**
- * BlogPostList component - displays a list of blog posts with infinite scroll
- * @param {number} pageSize - Number of posts to load per page (default: 10)
+ * ProjectsList component - displays project case studies using the blog infrastructure
+ * Filters blog posts by "Projects" or "Case Studies" category
+ * @param {number} pageSize - Number of projects to load per page (default: 12)
  */
-export default function BlogPostList({ pageSize = 10 }) {
+export default function ProjectsList({ pageSize = 12 }) {
   const [searchQuery, setSearchQuery] = useState('');
-  const { posts, loading, error, hasMore, loadMore } = usePosts(pageSize, searchQuery);
+  const { posts, loading, error, hasMore, loadMore } = useProjectPosts(pageSize, searchQuery);
   const observerTarget = useRef(null);
 
   /**
    * Intersection Observer for infinite scroll
-   * Loads more posts when the user scrolls near the bottom
+   * Loads more projects when the user scrolls near the bottom
    */
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -49,7 +50,7 @@ export default function BlogPostList({ pageSize = 10 }) {
       <SearchBar
         value={searchQuery}
         onChange={setSearchQuery}
-        placeholder="Search blog posts"
+        placeholder="Search projects"
       />
 
       {/* Error State */}
@@ -67,7 +68,7 @@ export default function BlogPostList({ pageSize = 10 }) {
         </div>
       )}
 
-      {/* Posts Grid */}
+      {/* Projects Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-400 lg:gap-600">
         {posts.map((post) => (
           <BlogPostCard key={post.id} post={post} />
@@ -95,12 +96,12 @@ export default function BlogPostList({ pageSize = 10 }) {
         </div>
       )}
 
-      {/* Loading State - More Posts */}
+      {/* Loading State - More Projects */}
       {loading && posts.length > 0 && (
         <div className="mt-600 text-center">
           <div className="inline-flex items-center gap-200 text-5 text-neutral-600">
             <div className="w-[20px] h-[20px] border-2 border-brand-blue-500 border-t-transparent rounded-full animate-spin" />
-            Loading more posts...
+            Loading more projects...
           </div>
         </div>
       )}
@@ -113,14 +114,14 @@ export default function BlogPostList({ pageSize = 10 }) {
               <>
                 <h2 className="text-3 text-neutral-900 mb-200">No results found</h2>
                 <p className="text-5 text-neutral-600">
-                  No blog posts match &quot;{searchQuery}&quot;. Try a different search term.
+                  No projects match &quot;{searchQuery}&quot;. Try a different search term.
                 </p>
               </>
             ) : (
               <>
-                <h2 className="text-3 text-neutral-900 mb-200">No posts yet</h2>
+                <h2 className="text-3 text-neutral-900 mb-200">No projects yet</h2>
                 <p className="text-5 text-neutral-600">
-                  Check back soon for new content!
+                  Project case studies will be showcased here soon. Check back later!
                 </p>
               </>
             )}
