@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Button from './Button';
 
-export default function CTASection() {
+export default function CTASection({ spacing }) {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -26,7 +26,7 @@ export default function CTASection() {
   };
 
   return (
-    <section className="py-800 md:py-1000">
+    <section className={spacing}>
       <div className="max-w-4xl mx-auto text-center">
         <h2 className="text-2 text-neutral-900 mb-300 md:mb-400">
           Ready to Transform Your Data Strategy?

@@ -1,6 +1,6 @@
-export default function HeroSection() {
+export default function HeroSection({ spacing }) {
   return (
-    <section className="py-800 md:py-1000 relative overflow-hidden">
+    <section className={`${spacing} relative overflow-hidden`}>
       {/* Subtle Background Gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-brand-blue-500/5 via-transparent to-brand-cyan-500/5 -z-10" />
 

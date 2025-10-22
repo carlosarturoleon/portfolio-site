@@ -1,12 +1,12 @@
-export default function IntroductionSection() {
+export default function IntroductionSection({ spacing }) {
   return (
-    <section className="py-800 md:py-1000 border-t border-neutral-200">
+    <section className={`${spacing} border-t border-neutral-200`}>
       <div className="max-w-3xl mx-auto">
         <h2 className="text-2 text-neutral-900 mb-400 md:mb-500 text-center">
           Solving Your Toughest Data Challenges
         </h2>
 
-        <div className="space-y-400 text-4 text-neutral-400">
+        <div className="space-y-400 text-4 text-neutral-400 text-justify">
           <p>
             Most businesses struggle with fragmented data systems, manual
             reporting processes, and insights that arrive too late to be
@@ -17,7 +17,7 @@ export default function IntroductionSection() {
 
           <p>
             With  expertise in data engineering, analytics, and full stack
-            development, I don't just build pipelines, I architect 
+            development, I don't just build pipelines, I architect
             data ecosystems tailored to your specific business needs. Whether
             you're dealing with siloed data sources, scaling challenges, or the
             need for custom analytics platforms.

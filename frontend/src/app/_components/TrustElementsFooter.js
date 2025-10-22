@@ -1,9 +1,9 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-export default function TrustElementsFooter() {
+export default function TrustElementsFooter({ spacing }) {
   return (
-    <section className="py-800 md:py-1000 border-t border-neutral-200">
+    <section className={`${spacing} border-t border-neutral-200`}>
       <div className="max-w-4xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-600 md:gap-800 items-center">
           {/* Professional Headshot */}

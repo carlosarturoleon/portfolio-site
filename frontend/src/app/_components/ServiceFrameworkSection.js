@@ -1,49 +1,49 @@
-export default function ServiceFrameworkSection() {
+export default function ServiceFrameworkSection({ spacing }) {
   const services = [
     {
-      title: "Data Analytics & Engineering",
+      title: "Data Analytics",
       description:
-        "End to end data pipeline development, automated ETL/ELT processes, and scalable data infrastructure that grows with your business.",
+        "Transform raw data into actionable insights with custom analytics solutions. From interactive dashboards to predictive models, I help you make data-driven decisions that drive measurable business outcomes.",
       highlights: [
-        "Custom data pipelines",
-        "Real time analytics",
-        "Data warehouse optimization",
+        "Interactive dashboards & reporting",
+        "Business intelligence solutions",
+        "Data visualization & storytelling",
       ],
     },
     {
-      title: "dbt Package Development",
+      title: "Data Engineering",
       description:
-        "Custom dbt packages and transformations tailored to your unique business logic, with focus on maintainability and testing.",
+        "Build robust data infrastructure that scales with your business. I design and implement automated ETL/ELT pipelines, data warehouses, and streaming architectures that handle data at any scale.",
       highlights: [
-        "Custom transformations",
-        "Testing & documentation",
-        "Best practices implementation",
+        "ETL/ELT pipeline development",
+        "Data warehouse design & optimization",
+        "Real-time data processing",
       ],
     },
     {
-      title: "Full Stack Development",
+      title: "Software Development",
       description:
-        "Modern web applications with React, Django, and cloud infrastructure — from MVP to production-ready solutions.",
+        "Modern web applications built with React, Django, and cloud infrastructure. From MVP to production-ready solutions, I deliver full-stack applications that are scalable, maintainable, and user-friendly.",
       highlights: [
-        "React frontends",
-        "Django REST APIs",
-        "AWS deployment",
+        "React & Next.js frontends",
+        "Django REST API backends",
+        "AWS cloud deployment",
       ],
     },
     {
-      title: "Consulting & Strategy",
+      title: "Technical Consulting",
       description:
-        "Data architecture planning, technology stack selection, and roadmap development to align your data strategy with business goals.",
+        "Strategic guidance for your data and technology initiatives. I help you navigate technical decisions, optimize existing systems, and build roadmaps that align with your business goals.",
       highlights: [
-        "Architecture reviews",
-        "Technology selection",
+        "Architecture reviews & recommendations",
+        "Technology stack selection",
         "Implementation roadmaps",
       ],
     },
   ];
 
   return (
-    <section className="py-800 md:py-1000 border-t border-neutral-200">
+    <section className={`${spacing} border-t border-neutral-200`}>
       <div className="max-w-6xl mx-auto">
         {/* Services Section */}
         <div className="mb-1000">
@@ -63,7 +63,7 @@ export default function ServiceFrameworkSection() {
                 <h3 className="text-3 text-neutral-900 mb-300">
                   {service.title}
                 </h3>
-                <p className="text-4 text-neutral-400 mb-300">
+                <p className="text-4 text-neutral-400 mb-300 text-justify">
                   {service.description}
                 </p>
                 <ul className="space-y-150">
