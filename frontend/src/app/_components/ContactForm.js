@@ -231,7 +231,7 @@ export default function ContactForm() {
         <div className="mb-600 p-400 bg-brand-cyan-500 bg-opacity-10 border-2 border-brand-cyan-500 rounded-8">
           <h3 className="text-3 text-neutral-900 mb-200">Thank you for reaching out!</h3>
           <p className="text-4 text-neutral-400">
-            I've received your inquiry and will get back to you within 24 hours.
+            I've received your inquiry and will get back to you.
           </p>
         </div>
       )}

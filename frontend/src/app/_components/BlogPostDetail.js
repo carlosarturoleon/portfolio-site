@@ -128,12 +128,13 @@ export default function BlogPostDetail({ post }) {
       {categories.length > 0 && (
         <div className="flex flex-wrap gap-100 mb-300">
           {categories.map((category) => (
-            <span
+            <Link
               key={category.id}
-              className="inline-block text-6 text-brand-blue-500 bg-brand-blue-50 px-200 py-050 rounded"
+              href={`/blog?category=${category.slug}`}
+              className="inline-block text-6 text-brand-blue-500 bg-brand-blue-50 px-200 py-050 rounded hover:bg-brand-blue-100 transition-colors"
             >
               {category.name}
-            </span>
+            </Link>
           ))}
         </div>
       )}
@@ -250,12 +251,13 @@ export default function BlogPostDetail({ post }) {
           <h3 className="text-6 text-neutral-500 font-medium mb-200">Tags</h3>
           <div className="flex flex-wrap gap-100">
             {tags.map((tag) => (
-              <span
+              <Link
                 key={tag.id}
+                href={`/blog?tag=${tag.slug}`}
                 className="inline-block text-6 text-neutral-600 bg-neutral-50 px-200 py-050 rounded hover:bg-neutral-100 transition-colors"
               >
                 #{tag.name}
-              </span>
+              </Link>
             ))}
           </div>
         </div>

@@ -70,9 +70,27 @@ export async function fetchCategories() {
 }
 
 /**
+ * Fetch a single category by slug
+ * @param {string} slug - Category slug
+ * @returns {Promise<Object>} - Category data
+ */
+export async function fetchCategory(slug) {
+  return apiFetch(`/api/categories/${slug}/`);
+}
+
+/**
  * Fetch all tags
  * @returns {Promise<Array>} - List of tags
  */
 export async function fetchTags() {
   return apiFetch('/api/tags/');
+}
+
+/**
+ * Fetch a single tag by slug
+ * @param {string} slug - Tag slug
+ * @returns {Promise<Object>} - Tag data
+ */
+export async function fetchTag(slug) {
+  return apiFetch(`/api/tags/${slug}/`);
 }

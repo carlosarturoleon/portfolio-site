@@ -11,7 +11,7 @@ export default function Contact() {
             </h2>
             <p className="text-4 text-neutral-0 mb-300 lg:mb-0">
               Let's discuss how my expertise in data analytics, software development,
-              and data engineering can help you achieve your business goals. Get a response within 24 hours.
+              and data engineering can help you achieve your business goals.
             </p>
           </div>
           <div className="flex items-center justify-center">

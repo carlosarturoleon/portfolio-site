@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import Link from 'next/link';
 import BlogPostCard from './BlogPostCard';
 import SearchBar from './SearchBar';
 import { usePosts } from '../../lib/hooks/usePosts';
@@ -8,10 +9,25 @@ import { usePosts } from '../../lib/hooks/usePosts';
 /**
  * BlogPostList component - displays a list of blog posts with infinite scroll
  * @param {number} pageSize - Number of posts to load per page (default: 10)
+ * @param {string} categorySlug - Optional category slug to filter posts
+ * @param {string} tagSlug - Optional tag slug to filter posts
+ * @param {string} categoryName - Optional category name for display
+ * @param {string} tagName - Optional tag name for display
  */
-export default function BlogPostList({ pageSize = 10 }) {
+export default function BlogPostList({
+  pageSize = 10,
+  categorySlug = '',
+  tagSlug = '',
+  categoryName = '',
+  tagName = ''
+}) {
   const [searchQuery, setSearchQuery] = useState('');
-  const { posts, loading, error, hasMore, loadMore } = usePosts(pageSize, searchQuery);
+  const { posts, loading, error, hasMore, loadMore } = usePosts(
+    pageSize,
+    searchQuery,
+    categorySlug,
+    tagSlug
+  );
   const observerTarget = useRef(null);
 
   /**
@@ -51,6 +67,59 @@ export default function BlogPostList({ pageSize = 10 }) {
         onChange={setSearchQuery}
         placeholder="Search blog posts"
       />
+
+      {/* Active Filters */}
+      {(categoryName || tagName) && (
+        <div className="mb-400 flex flex-wrap items-center gap-200">
+          <span className="text-6 text-neutral-600">Filtered by:</span>
+          {categoryName && (
+            <div className="inline-flex items-center gap-100 bg-brand-blue-50 text-brand-blue-700 px-300 py-100 rounded-lg border border-brand-blue-200">
+              <span className="text-6 font-medium">Category: {categoryName}</span>
+              <Link
+                href="/blog"
+                className="text-brand-blue-500 hover:text-brand-blue-700 transition-colors"
+                aria-label="Clear category filter"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-4 w-4"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </Link>
+            </div>
+          )}
+          {tagName && (
+            <div className="inline-flex items-center gap-100 bg-neutral-100 text-neutral-700 px-300 py-100 rounded-lg border border-neutral-200">
+              <span className="text-6 font-medium">Tag: #{tagName}</span>
+              <Link
+                href="/blog"
+                className="text-neutral-500 hover:text-neutral-700 transition-colors"
+                aria-label="Clear tag filter"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-4 w-4"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </Link>
+            </div>
+          )}
+        </div>
+      )}
 
       {/* Error State */}
       {error && (

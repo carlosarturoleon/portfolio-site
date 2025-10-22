@@ -7,9 +7,11 @@ import { fetchPosts } from '../api';
  * Custom hook for fetching blog posts with infinite scroll support
  * @param {number} pageSize - Number of posts to fetch per page
  * @param {string} searchQuery - Optional search query to filter posts
+ * @param {string} categorySlug - Optional category slug to filter posts
+ * @param {string} tagSlug - Optional tag slug to filter posts
  * @returns {Object} - Posts data, loading states, and fetch functions
  */
-export function usePosts(pageSize = 10, searchQuery = '') {
+export function usePosts(pageSize = 10, searchQuery = '', categorySlug = '', tagSlug = '') {
   const [posts, setPosts] = useState([]);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
@@ -30,7 +32,11 @@ export function usePosts(pageSize = 10, searchQuery = '') {
     setError(null);
 
     try {
-      const filters = searchQuery ? { search: searchQuery } : {};
+      const filters = {};
+      if (searchQuery) filters.search = searchQuery;
+      if (categorySlug) filters.categories__slug = categorySlug;
+      if (tagSlug) filters.tags__slug = tagSlug;
+
       const data = await fetchPosts(page, pageSize, filters);
 
       setPosts((prevPosts) => {
@@ -49,7 +55,7 @@ export function usePosts(pageSize = 10, searchQuery = '') {
     } finally {
       setLoading(false);
     }
-  }, [page, pageSize, loading, hasMore, searchQuery]);
+  }, [page, pageSize, loading, hasMore, searchQuery, categorySlug, tagSlug]);
 
   /**
    * Reset and refetch from beginning
@@ -63,7 +69,7 @@ export function usePosts(pageSize = 10, searchQuery = '') {
   }, []);
 
   /**
-   * Reset when search query changes
+   * Reset when search query or filters change
    */
   useEffect(() => {
     setPosts([]);
@@ -71,7 +77,7 @@ export function usePosts(pageSize = 10, searchQuery = '') {
     setHasMore(true);
     setError(null);
     initialFetchDone.current = false;
-  }, [searchQuery]);
+  }, [searchQuery, categorySlug, tagSlug]);
 
   /**
    * Initial load
