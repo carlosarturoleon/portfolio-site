@@ -90,22 +90,34 @@ export default function BlogPostCard({ post }) {
         {/* Categories and Tags */}
         {(categories.length > 0 || tags.length > 0) && (
           <div className="flex flex-wrap gap-100 mt-300">
-            {categories.slice(0, 2).map((category) => (
-              <span
+            {categories.slice(0, 3).map((category) => (
+              <Link
                 key={category.id}
-                className="inline-block text-6 text-brand-blue-500 bg-brand-blue-50 px-200 py-050 rounded"
+                href={`/blog?category=${category.slug}`}
+                className="inline-block text-6 text-brand-blue-500 bg-brand-blue-50 px-200 py-050 rounded hover:bg-brand-blue-100 transition-colors"
               >
                 {category.name}
-              </span>
+              </Link>
             ))}
+            {categories.length > 3 && (
+              <span className="inline-block text-6 text-brand-blue-500 bg-brand-blue-50 px-200 py-050 rounded">
+                +{categories.length - 3} more
+              </span>
+            )}
             {tags.slice(0, 3).map((tag) => (
-              <span
+              <Link
                 key={tag.id}
-                className="inline-block text-6 text-neutral-500 bg-neutral-50 px-200 py-050 rounded"
+                href={`/blog?tag=${tag.slug}`}
+                className="inline-block text-6 text-neutral-500 bg-neutral-50 px-200 py-050 rounded hover:bg-neutral-100 transition-colors"
               >
                 #{tag.name}
-              </span>
+              </Link>
             ))}
+            {tags.length > 3 && (
+              <span className="inline-block text-6 text-neutral-500 bg-neutral-50 px-200 py-050 rounded">
+                +{tags.length - 3} more
+              </span>
+            )}
           </div>
         )}
       </div>
