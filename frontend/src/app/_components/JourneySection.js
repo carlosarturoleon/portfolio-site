@@ -1,12 +1,12 @@
-export default function JourneySection() {
+export default function JourneySection({ spacing }) {
   return (
-    <section className="py-800 md:py-1000 border-t border-neutral-200">
+    <section className={`${spacing} border-t border-neutral-200`}>
       <div className="max-w-3xl mx-auto">
         <h2 className="text-2 text-neutral-900 mb-400 md:mb-500 text-center">
           My Journey & Philosophy
         </h2>
 
-        <div className="space-y-400 text-4 text-neutral-400">
+        <div className="space-y-400 text-4 text-neutral-400 text-justify">
           <p>
             My path into data engineering wasn't traditional, but that's
             precisely what gives me a unique edge. Starting as a curious problem
@@ -41,7 +41,7 @@ export default function JourneySection() {
             Europe, and Asia-Pacific.
           </p>
 
-          <p className="text-5 text-neutral-900 italic">
+          <p className="text-5 text-neutral-900 italic text-center">
             "Great data solutions aren't about having the fanciest tools, they're
             about deeply understanding your business challenges and architecting
             systems that scale with your growth."
