@@ -100,9 +100,13 @@ export default function BlogPostCard({ post }) {
               </Link>
             ))}
             {categories.length > 3 && (
-              <span className="inline-block text-6 text-brand-blue-500 bg-brand-blue-50 px-200 py-050 rounded">
+              <Link
+                href={`/blog/${slug}`}
+                className="inline-block text-6 text-brand-blue-500 bg-brand-blue-50 px-200 py-050 rounded hover:bg-brand-blue-100 transition-colors"
+                title="View all categories"
+              >
                 +{categories.length - 3} more
-              </span>
+              </Link>
             )}
             {tags.slice(0, 3).map((tag) => (
               <Link
@@ -114,9 +118,13 @@ export default function BlogPostCard({ post }) {
               </Link>
             ))}
             {tags.length > 3 && (
-              <span className="inline-block text-6 text-neutral-500 bg-neutral-50 px-200 py-050 rounded">
+              <Link
+                href={`/blog/${slug}`}
+                className="inline-block text-6 text-neutral-500 bg-neutral-50 px-200 py-050 rounded hover:bg-neutral-100 transition-colors"
+                title="View all tags"
+              >
                 +{tags.length - 3} more
-              </span>
+              </Link>
             )}
           </div>
         )}

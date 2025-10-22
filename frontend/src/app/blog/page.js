@@ -5,7 +5,7 @@ import { useSearchParams } from 'next/navigation';
 import Header from '../_components/Header';
 import Footer from '../_components/Footer';
 import BlogPostList from '../_components/BlogPostList';
-import { fetchCategories, fetchTags } from '../../lib/api';
+import { fetchCategory, fetchTag } from '../../lib/api';
 
 export default function BlogPage() {
   const searchParams = useSearchParams();
@@ -22,20 +22,14 @@ export default function BlogPage() {
       setLoading(true);
       try {
         if (categorySlug) {
-          const response = await fetchCategories();
-          // Handle both paginated response and array response
-          const categories = Array.isArray(response) ? response : response.results || [];
-          const category = categories.find((c) => c.slug === categorySlug);
+          const category = await fetchCategory(categorySlug);
           setCategoryName(category?.name || '');
         } else {
           setCategoryName('');
         }
 
         if (tagSlug) {
-          const response = await fetchTags();
-          // Handle both paginated response and array response
-          const tags = Array.isArray(response) ? response : response.results || [];
-          const tag = tags.find((t) => t.slug === tagSlug);
+          const tag = await fetchTag(tagSlug);
           setTagName(tag?.name || '');
         } else {
           setTagName('');

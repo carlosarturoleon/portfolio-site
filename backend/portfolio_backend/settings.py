@@ -209,9 +209,9 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_THROTTLE_CLASSES': [
         'rest_framework.throttling.AnonRateThrottle',
-    ],
+    ] if not DEBUG else [],  # Disable throttling in development
     'DEFAULT_THROTTLE_RATES': {
-        'anon': '100/hour',  # General API: 100 requests per hour per IP
+        'anon': '100/hour',  # General API: 100 requests per hour per IP (production only)
         'newsletter_subscribe': '5/hour',  # Newsletter subscription: 5 per hour per IP
         'newsletter_confirm': '10/hour',  # Newsletter confirmation: 10 per hour per IP
         'contact_submit': '3/hour',  # Contact form: 3 submissions per hour per IP
