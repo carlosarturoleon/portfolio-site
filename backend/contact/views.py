@@ -49,7 +49,7 @@ def submit_contact_form(request):
         return Response(
             {
                 'success': True,
-                'message': 'Thank you for your inquiry! I will review your project details and get back to you within 24 hours.',
+                'message': 'Thank you for your inquiry! I will review your project details and get back to you.',
                 'inquiry_id': inquiry.id
             },
             status=status.HTTP_201_CREATED
@@ -133,7 +133,7 @@ Hi {inquiry.name.split()[0]},
 
 Thank you for your interest in working together on {services.lower()} project{'s' if len(inquiry.services_interested) > 1 else ''}.
 
-I've received your inquiry and will review your project details carefully. I'll get back to you within 24 hours to discuss next steps.
+I've received your inquiry and will review your project details carefully. I'll get back to you to discuss next steps.
 
 In the meantime, feel free to check out my latest projects and blog posts at {settings.SITE_URL}.
 
