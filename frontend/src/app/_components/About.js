@@ -29,7 +29,7 @@ export default function About() {
             countries. Including the United States, Canada, Australia, Spain,
             Switzerland, and the Dominican Republic. I specialize in building
             automated data pipelines, custom analytics solutions, and scalable
-            web applications that reduce manual work by 70%+ and deliver
+            web applications that reduce manual work up to 70% and deliver
             measurable ROI.
           </p>
           <Button href="/about">About</Button>

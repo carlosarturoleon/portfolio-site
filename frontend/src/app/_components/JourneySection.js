@@ -3,48 +3,32 @@ export default function JourneySection({ spacing }) {
     <section className={`${spacing} border-t border-neutral-200`}>
       <div className="max-w-3xl mx-auto">
         <h2 className="text-2 text-neutral-900 mb-400 md:mb-500 text-center">
-          My Journey & Philosophy
+          My Journey
         </h2>
 
         <div className="space-y-400 text-4 text-neutral-400 text-justify">
           <p>
-            My path into data engineering wasn't traditional, but that's
-            precisely what gives me a unique edge. Starting as a curious problem
-            solver fascinated by how data could tell stories and drive
-            decisions, I quickly realized that most businesses weren't drowning
-            in too little data, they were drowning in too much, with no clear
-            way to extract actionable insights.
+            Hi, I'm Carlos Leon, a full stack developer and data analyst based
+            in Bogotá, Colombia. I transitioned from environmental engineering
+            to tech, driven by a passion for solving problems through automation
+            and data driven insights.
           </p>
 
           <p>
-            This realization shaped my entire approach: technology should serve
-            the business, not the other way around. I don't build complex
-            systems for the sake of complexity. Every pipeline, every
-            transformation, every dashboard I create is laser-focused on solving
-            a specific business problem and delivering measurable value.
+            I pursued studies in programming, business intelligence, and
+            automation, building expertise in Excel, Python, Java, React,
+            Django, and PostgreSQL. This allows me to approach technical
+            challenges with an analytical mindset shaped by engineering
+            principles.
           </p>
 
           <p>
-            What drives me is the transformation moment — when a client realizes
-            they finally have clarity on their operations, when manual processes
-            that took days now happen automatically, when decisions that used to
-            be gut-based are now backed by real-time data. That's why I do this
-            work.
-          </p>
-
-          <p>
-            Based in Bogotá, Colombia, I've built a practice that serves clients
-            globally from startups in San Francisco to enterprises in Sydney.
-            Remote collaboration isn't just a necessity; it's an advantage that
-            brings diverse perspectives and flexible working relationships. My
-            timezone overlap works seamlessly with teams across the Americas,
-            Europe, and Asia-Pacific.
-          </p>
-
-          <p className="text-5 text-neutral-900 italic text-center">
-            "Great data solutions aren't about having the fanciest tools, they're
-            about deeply understanding your business challenges and architecting
-            systems that scale with your growth."
+            I specialize in creating efficient data pipelines and automating
+            workflows that save time and reduce costs. Building dashboards and
+            reports using Excel, Google Sheets, and Looker Studio to make
+            informed decisions. Developing Python scripts and using ETL tools
+            like Fivetran to automate data workflows, dbt to ensure data
+            quality, and BigQuery for scalable data processing.
           </p>
         </div>
       </div>

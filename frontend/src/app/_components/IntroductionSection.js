@@ -3,31 +3,49 @@ export default function IntroductionSection({ spacing }) {
     <section className={`${spacing} border-t border-neutral-200`}>
       <div className="max-w-3xl mx-auto">
         <h2 className="text-2 text-neutral-900 mb-400 md:mb-500 text-center">
-          Solving Your Toughest Data Challenges
+          Solving Your Data Challenges
         </h2>
 
         <div className="space-y-400 text-4 text-neutral-400 text-justify">
           <p>
-            Most businesses struggle with fragmented data systems, manual
-            reporting processes, and insights that arrive too late to be
-            actionable. I specialize in transforming these pain points into
-            streamlined, automated solutions that give you real time visibility
-            into your operations.
+            Data silos, quality issues, and manual processing are among the most
+            common challenges businesses face; Marketing teams export leads
+            every week, executives wait days for consolidated reports because
+            financial and operational data live in separate systems, and
+            critical decisions are delayed because no one has a complete
+            picture.
           </p>
 
           <p>
-            With  expertise in data engineering, analytics, and full stack
-            development, I don't just build pipelines, I architect
-            data ecosystems tailored to your specific business needs. Whether
-            you're dealing with siloed data sources, scaling challenges, or the
-            need for custom analytics platforms.
+            Quality issues undermine trust and waste resources. Contacts with
+            invalid emails cause teams to chase dead leads, product catalogs
+            containing inconsistent information that confuses customers, and
+            leaders arguing over conflicting numbers.
           </p>
 
           <p>
-            My approach combines technical precision with business pragmatism.
-            I focus on delivering measurable outcomes: faster decision making,
-            reduced operational overhead, and data infrastructure that scales
-            with your growth.
+            Bottlenecks drain productivity; Managers spend hours creating
+            reports, users wait days for simple queries, and critical
+            spreadsheets break constantly. These challenges cost thousands in
+            labor hours, missed opportunities, and poor decision making.
+          </p>
+
+          <p>
+            Automated pipelines sync marketing and sales platforms, unified
+            dashboards pull from multiple sources automatically showing a more
+            complete picture, and eliminate manual consolidation. Data cleaning
+            validates contacts, standardizes information, reconciles
+            discrepancies, and transforms unreliable data into trustworthy
+            business assets.
+          </p>
+
+          <p>
+            Workflow automation, self service dashboards, and clear
+            documentation free your team from hours of manual work, delivering
+            faster and reliable insights. Most importantly, you gain resilience and scalability, your business
+            no longer depends on one person who understands the complex Excel
+            file. Teams can access insights on demand, and you have a reliable
+            data infrastructure that grows with your business.
           </p>
         </div>
       </div>
