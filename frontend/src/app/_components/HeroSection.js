@@ -7,7 +7,7 @@ export default function HeroSection({ spacing }) {
       <div className="text-center max-w-4xl mx-auto">
         {/* Large Compelling Headline */}
         <h1 className="text-1-mobile md:text-1 text-neutral-900 mb-300 md:mb-400">
-          Turning Data Complexity Into Strategic Clarity
+          Turning Data Complexity Into Clarity
         </h1>
 
         {/* Subheadline focusing on outcomes */}

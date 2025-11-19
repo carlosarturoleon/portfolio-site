@@ -3,11 +3,11 @@ export default function ServiceFrameworkSection({ spacing }) {
     {
       title: "Data Analytics",
       description:
-        "Transform raw data into actionable insights with custom analytics solutions. From interactive dashboards to predictive models, I help you make data-driven decisions that drive measurable business outcomes.",
+        "Transform raw data into actionable insights with custom analytics solutions. From interactive dashboards to predictive models, I help you make data driven decisions that drive measurable business outcomes.",
       highlights: [
-        "Interactive dashboards & reporting",
+        "Interactive dashboards and reporting",
         "Business intelligence solutions",
-        "Data visualization & storytelling",
+        "Data visualization and storytelling",
       ],
     },
     {
@@ -16,16 +16,16 @@ export default function ServiceFrameworkSection({ spacing }) {
         "Build robust data infrastructure that scales with your business. I design and implement automated ETL/ELT pipelines, data warehouses, and streaming architectures that handle data at any scale.",
       highlights: [
         "ETL/ELT pipeline development",
-        "Data warehouse design & optimization",
-        "Real-time data processing",
+        "Data warehouse design and optimization",
+        "Data processing",
       ],
     },
     {
       title: "Software Development",
       description:
-        "Modern web applications built with React, Django, and cloud infrastructure. From MVP to production-ready solutions, I deliver full-stack applications that are scalable, maintainable, and user-friendly.",
+        "Modern web applications built with React, Django, and cloud infrastructure. From MVP to production ready solutions, I deliver full stack applications that are scalable, maintainable, and user friendly.",
       highlights: [
-        "React & Next.js frontends",
+        "React and Next.js frontends",
         "Django REST API backends",
         "AWS cloud deployment",
       ],
@@ -35,7 +35,7 @@ export default function ServiceFrameworkSection({ spacing }) {
       description:
         "Strategic guidance for your data and technology initiatives. I help you navigate technical decisions, optimize existing systems, and build roadmaps that align with your business goals.",
       highlights: [
-        "Architecture reviews & recommendations",
+        "Architecture reviews and recommendations",
         "Technology stack selection",
         "Implementation roadmaps",
       ],
@@ -50,9 +50,6 @@ export default function ServiceFrameworkSection({ spacing }) {
           <h2 className="text-2 text-neutral-900 mb-300 md:mb-400 text-center">
             How I Can Help
           </h2>
-          <p className="text-4 text-neutral-400 mb-600 md:mb-800 text-center max-w-2xl mx-auto">
-            Comprehensive services designed to solve your data challenges
-          </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-400 md:gap-500">
             {services.map((service, index) => (

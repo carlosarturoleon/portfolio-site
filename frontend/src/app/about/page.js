@@ -8,8 +8,8 @@ import CTASection from '../_components/CTASection';
 import TrustElementsFooter from '../_components/TrustElementsFooter';
 
 export const metadata = {
-  title: 'About - Carlos Leon | Data Engineer & Full-Stack Developer',
-  description: 'Learn about Carlos Leon, a data engineer and software developer who helps businesses automate data pipelines and build scalable analytics solutions with 70%+ efficiency gains.',
+  title: 'About Carlos Leon | Data Engineering & Analytics Solutions',
+  description: 'Turn data complexity into clarity. Automated data pipelines, custom analytics, and scalable web applications delivering 70%+ reduction in manual work.',
 };
 
 // Centralized spacing configuration for all sections
