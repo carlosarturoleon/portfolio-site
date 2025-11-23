@@ -24,12 +24,10 @@ class StaticViewSitemap(Sitemap):
     changefreq = 'monthly'
 
     def items(self):
-        return ['home', 'blog', 'newsletter']
+        return ['home', 'blog']
 
     def location(self, item):
         if item == 'home':
             return '/'
         elif item == 'blog':
             return '/blog/'
-        elif item == 'newsletter':
-            return '/newsletter/'

@@ -66,4 +66,9 @@ class PostAdmin(MarkdownxModelAdmin):
         }),
     )
 
+    class Media:
+        css = {
+            'all': ('admin/css/blog_admin.css',)
+        }
+
 

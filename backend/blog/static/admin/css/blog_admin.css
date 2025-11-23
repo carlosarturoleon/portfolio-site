@@ -1,0 +1,47 @@
+/* Custom styling for Django admin Post content editing */
+
+/* Make the content textarea (markdown editor) much larger */
+#id_content {
+    min-height: 800px !important;
+    width: 100% !important;
+    max-width: 1400px !important;
+    font-size: 14px !important;
+    line-height: 1.6 !important;
+    margin-bottom: 20px !important;
+}
+
+/* Make the markdownx preview area larger too */
+.markdownx-preview {
+    min-height: 800px !important;
+    max-width: 1400px !important;
+    padding: 15px !important;
+    width: 100% !important;
+}
+
+/* Increase the overall editor container */
+.markdownx {
+    min-height: 800px !important;
+    max-width: 1400px !important;
+}
+
+/* Make meta description textarea larger as well */
+#id_meta_description {
+    min-height: 120px !important;
+    width: 100% !important;
+}
+
+/* Improve spacing in the content fieldset */
+.field-content {
+    margin-bottom: 20px;
+}
+
+/* Make the title field larger */
+#id_title {
+    font-size: 16px !important;
+    padding: 8px !important;
+}
+
+/* Improve overall form readability */
+.form-row {
+    padding: 10px 0;
+}
