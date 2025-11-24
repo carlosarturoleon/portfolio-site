@@ -1,13 +1,13 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Header from '../_components/Header';
 import Footer from '../_components/Footer';
 import BlogPostList from '../_components/BlogPostList';
 import { fetchCategory, fetchTag } from '../../lib/api';
 
-export default function BlogPage() {
+function BlogContent() {
   const searchParams = useSearchParams();
   const categorySlug = searchParams.get('category') || '';
   const tagSlug = searchParams.get('tag') || '';
@@ -47,7 +47,7 @@ export default function BlogPage() {
   // Dynamic page title based on filters
   const getPageTitle = () => {
     if (categoryName) return `${categoryName} - Blog`;
-    if (tagName) return `Posts tagged "${tagName}" - Blog`;
+    if (tagName) return `Posts tagged &ldquo;${tagName}&rdquo; - Blog`;
     return 'Blog';
   };
 
@@ -58,37 +58,54 @@ export default function BlogPage() {
   };
 
   return (
+    <main className="py-800">
+      <div className="max-w-[1110px] mx-auto">
+        <div className="mb-600">
+          <h1 className="text-1 text-neutral-900 mb-200">{getPageTitle()}</h1>
+          <p className="text-4 text-neutral-600">
+            {getPageDescription()}
+          </p>
+        </div>
+
+        {!loading && (
+          <BlogPostList
+            pageSize={12}
+            categorySlug={categorySlug}
+            tagSlug={tagSlug}
+            categoryName={categoryName}
+            tagName={tagName}
+          />
+        )}
+
+        {loading && (
+          <div className="text-center py-800">
+            <div className="inline-flex items-center gap-200 text-5 text-neutral-600">
+              <div className="w-[20px] h-[20px] border-2 border-brand-blue-500 border-t-transparent rounded-full animate-spin" />
+              Loading...
+            </div>
+          </div>
+        )}
+      </div>
+    </main>
+  );
+}
+
+export default function BlogPage() {
+  return (
     <div className="min-h-screen bg-neutral-0 container-margin container-padding">
       <Header />
-      <main className="py-800">
-        <div className="max-w-[1110px] mx-auto">
-          <div className="mb-600">
-            <h1 className="text-1 text-neutral-900 mb-200">{getPageTitle()}</h1>
-            <p className="text-4 text-neutral-600">
-              {getPageDescription()}
-            </p>
-          </div>
-
-          {!loading && (
-            <BlogPostList
-              pageSize={12}
-              categorySlug={categorySlug}
-              tagSlug={tagSlug}
-              categoryName={categoryName}
-              tagName={tagName}
-            />
-          )}
-
-          {loading && (
-            <div className="text-center py-800">
-              <div className="inline-flex items-center gap-200 text-5 text-neutral-600">
-                <div className="w-[20px] h-[20px] border-2 border-brand-blue-500 border-t-transparent rounded-full animate-spin" />
-                Loading...
-              </div>
+      <Suspense fallback={
+        <main className="py-800">
+          <div className="max-w-[1110px] mx-auto text-center">
+            <div className="inline-flex items-center gap-200 text-5 text-neutral-600">
+              <div className="w-[20px] h-[20px] border-2 border-brand-blue-500 border-t-transparent rounded-full animate-spin" />
+              Loading...
             </div>
-          )}
-        </div>
-      </main>
+          </div>
+        </main>
+      }>
+        <BlogContent />
+      </Suspense>
       <Footer />
     </div>
   );

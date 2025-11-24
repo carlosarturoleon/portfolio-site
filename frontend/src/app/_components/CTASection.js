@@ -32,7 +32,7 @@ export default function CTASection({ spacing }) {
           Ready to Transform Your Data Strategy?
         </h2>
         <p className="text-4 text-neutral-400 mb-600 md:mb-800 max-w-2xl mx-auto">
-          Let's discuss how we can automate your data processes, build scalable
+          Let&apos;s discuss how we can automate your data processes, build scalable
           solutions, and deliver measurable ROI for your business.
         </p>
 

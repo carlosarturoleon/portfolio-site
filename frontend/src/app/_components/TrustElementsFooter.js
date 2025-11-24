@@ -22,7 +22,7 @@ export default function TrustElementsFooter({ spacing }) {
           {/* Trust Elements & Info */}
           <div className="text-center md:text-left">
             <h3 className="text-3 text-neutral-900 mb-300">
-              Let's Work Together
+              Let&apos;s Work Together
             </h3>
 
             {/* Availability & Timezone */}

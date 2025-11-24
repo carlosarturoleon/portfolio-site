@@ -8,7 +8,7 @@ export default function JourneySection({ spacing }) {
 
         <div className="space-y-400 text-4 text-neutral-400 text-justify">
           <p>
-            Hi, I'm Carlos Leon, a full stack developer and data analyst based
+            Hi, I&apos;m Carlos Leon, a full stack developer and data analyst based
             in Bogotá, Colombia. I transitioned from environmental engineering
             to tech, driven by a passion for solving problems through automation
             and data driven insights.

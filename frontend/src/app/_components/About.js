@@ -21,11 +21,11 @@ export default function About() {
         {/* About Text */}
         <div className="text-center md:text-center lg:text-left max-w-[540px] mx-auto md:max-w-full lg:mx-0 lg:max-w-none">
           <h2 className="text-2 text-neutral-900 mb-300 md:mb-400">
-            I'm Carlos Leon, a data analyst and software developer who helps
+            I&apos;m Carlos Leon, a data analyst and software developer who helps
             businesses turn data chaos into strategic advantage
           </h2>
           <p className="text-4 text-neutral-400 mb-300 md:mb-400">
-            Based in Bogotá, I've delivered data solutions for clients across 
+            Based in Bogotá, I&apos;ve delivered data solutions for clients across 
             countries. Including the United States, Canada, Australia, Spain,
             Switzerland, and the Dominican Republic. I specialize in building
             automated data pipelines, custom analytics solutions, and scalable
