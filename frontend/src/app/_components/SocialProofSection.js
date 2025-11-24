@@ -50,7 +50,7 @@ export default function SocialProofSection() {
               className="bg-neutral-0 rounded-16 p-400 md:p-500 shadow-sm hover:shadow-md transition-shadow"
             >
               <p className="text-4 text-neutral-400 mb-300 italic">
-                "{testimonial.quote}"
+                &ldquo;{testimonial.quote}&rdquo;
               </p>
               <div className="border-t border-neutral-200 pt-300">
                 <p className="text-5 text-neutral-900">{testimonial.name}</p>
