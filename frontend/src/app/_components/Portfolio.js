@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
-import { useProjectImages } from '../../lib/hooks/useProjectImages';
+import { useProjectImages } from '@/lib/hooks/useProjectImages';
 
 export default function Portfolio() {
   const { projects, loading, error } = useProjectImages();

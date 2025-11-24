@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Header from '../../_components/Header';
 import Footer from '../../_components/Footer';
 import BlogPostDetail from '../../_components/BlogPostDetail';
-import { usePost } from '../../../lib/hooks/usePost';
+import { usePost } from '@/lib/hooks/usePost';
 
 export default function BlogDetailPage({ params }) {
   const [slug, setSlug] = useState(null);
