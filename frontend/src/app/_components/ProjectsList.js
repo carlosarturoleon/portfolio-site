@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import BlogPostCard from './BlogPostCard';
 import SearchBar from './SearchBar';
-import { useProjectPosts } from '../../lib/hooks/useProjectPosts';
+import { useProjectPosts } from '@/lib/hooks/useProjectPosts';
 
 /**
  * ProjectsList component - displays project case studies using the blog infrastructure

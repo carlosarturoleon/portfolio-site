@@ -5,7 +5,7 @@ import { useSearchParams } from 'next/navigation';
 import Header from '../_components/Header';
 import Footer from '../_components/Footer';
 import BlogPostList from '../_components/BlogPostList';
-import { fetchCategory, fetchTag } from '../../lib/api';
+import { fetchCategory, fetchTag } from '@/lib/api';
 
 function BlogContent() {
   const searchParams = useSearchParams();

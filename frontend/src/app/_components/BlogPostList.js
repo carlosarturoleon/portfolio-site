@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import BlogPostCard from './BlogPostCard';
 import SearchBar from './SearchBar';
-import { usePosts } from '../../lib/hooks/usePosts';
+import { usePosts } from '@/lib/hooks/usePosts';
 
 /**
  * BlogPostList component - displays a list of blog posts with infinite scroll
