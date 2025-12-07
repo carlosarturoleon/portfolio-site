@@ -75,7 +75,7 @@ SECRET_KEY = config('SECRET_KEY', default='django-insecure-b+_$g1j7-*up%$!z1)&sh
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=True, cast=bool)
 
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost,127.0.0.1,0.0.0.0').split(',')
+ALLOWED_HOSTS = [host.strip() for host in config('ALLOWED_HOSTS', default='localhost,127.0.0.1,0.0.0.0').split(',')]
 
 
 # Application definition
@@ -193,7 +193,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # CORS Settings
-CORS_ALLOWED_ORIGINS = config('CORS_ALLOWED_ORIGINS', default='http://localhost:3000').split(',')
+CORS_ALLOWED_ORIGINS = [origin.strip() for origin in config('CORS_ALLOWED_ORIGINS', default='http://localhost:3000').split(',')]
 
 CORS_ALLOW_CREDENTIALS = True
 
@@ -265,11 +265,9 @@ if not AWS_SES_ACCESS_KEY_ID:
             print(f"Warning: Could not load SES credentials from profile '{AWS_SES_PROFILE}': {e}")
 
 # SES configuration
-AWS_SES_REGION_NAME = config('AWS_SES_REGION_NAME')
-AWS_SES_REGION_ENDPOINT = config('AWS_SES_REGION_ENDPOINT')
-DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL')
-SITE_URL = config('SITE_URL')
-
+AWS_SES_REGION_NAME = config('AWS_SES_REGION_NAME', default='us-east-2')
+AWS_SES_REGION_ENDPOINT = config('AWS_SES_REGION_ENDPOINT', default='email.us-east-2.amazonaws.com')
+DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL', default='noreply@carlosleon.tech')
 # SES throttling (None = disabled)
 AWS_SES_AUTO_THROTTLE = config('AWS_SES_AUTO_THROTTLE', default=None)
 
