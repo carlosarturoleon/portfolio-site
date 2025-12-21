@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env.production  # Create this file with your actual production values
+    environment:
+      # Override with explicit environment variables if needed
+      - PYTHONUNBUFFERED=1
+    volumes:
+      # Optional: Mount .aws credentials if you want to use AWS profile instead of env vars
+      # - ~/.aws:/root/.aws:ro
+      # Optional: Mount media files for local development
+      - ./media:/app/media
+    networks:
+      - portfolio-network
+
+networks:
+  portfolio-network:
+    driver: bridge
