@@ -12,6 +12,7 @@ services:
 
   web:
     build: ./backend
+    image: portfolio-backend:latest
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - ./backend:/app

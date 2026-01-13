@@ -1,0 +1,277 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Portfolio Backend - Django on Lambda with API Gateway
+
+Parameters:
+  Environment:
+    Type: String
+    Default: production
+    AllowedValues:
+      - production
+      - staging
+    Description: Environment name
+
+  DomainName:
+    Type: String
+    Default: api.carlosleon.tech
+    Description: Custom domain for API Gateway
+
+  CertificateArn:
+    Type: String
+    Description: ACM certificate ARN for custom domain (must be in us-east-1 for API Gateway)
+
+  DBName:
+    Type: String
+    Default: portfolio_db
+    Description: Database name
+
+  DBUser:
+    Type: String
+    Default: portfolio_user
+    Description: Database username
+
+  DBHost:
+    Type: String
+    Description: RDS endpoint
+
+  DBPort:
+    Type: String
+    Default: '5432'
+    Description: Database port
+
+  VpcId:
+    Type: AWS::EC2::VPC::Id
+    Description: VPC ID where RDS is located
+
+  SubnetIds:
+    Type: List<AWS::EC2::Subnet::Id>
+    Description: Subnet IDs for Lambda (must have RDS access)
+
+  StaticFilesBucket:
+    Type: String
+    Description: S3 bucket name for static files
+
+  SendGridApiKey:
+    Type: String
+    NoEcho: true
+    Description: SendGrid API key for email
+
+  SlackWebhookUrl:
+    Type: String
+    NoEcho: true
+    Description: Slack webhook URL for notifications
+
+Globals:
+  Function:
+    Timeout: 30
+    MemorySize: 512
+    Runtime: python3.11
+    Architectures:
+      - x86_64
+    Environment:
+      Variables:
+        DJANGO_SETTINGS_MODULE: portfolio_backend.settings
+        DEBUG: 'False'
+        ENVIRONMENT: !Ref Environment
+
+Resources:
+  # Lambda Function
+  DjangoLambdaFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub portfolio-backend-${Environment}
+      Handler: portfolio_backend.asgi_lambda.handler
+      CodeUri: .
+      Description: Django portfolio backend
+      Timeout: 30
+      MemorySize: 512
+      VpcConfig:
+        SecurityGroupIds:
+          - !Ref LambdaSecurityGroup
+        SubnetIds: !Ref SubnetIds
+      Environment:
+        Variables:
+          # Django
+          SECRET_KEY: !Sub '{{resolve:secretsmanager:portfolio-backend-secrets:SecretString:SECRET_KEY}}'
+          ALLOWED_HOSTS: !Sub '${DomainName},*.execute-api.${AWS::Region}.amazonaws.com'
+
+          # Database
+          DB_NAME: !Ref DBName
+          DB_USER: !Ref DBUser
+          DB_PASSWORD: !Sub '{{resolve:secretsmanager:portfolio-backend-secrets:SecretString:DB_PASSWORD}}'
+          DB_HOST: !Ref DBHost
+          DB_PORT: !Ref DBPort
+
+          # AWS
+          AWS_REGION: !Ref AWS::Region
+          AWS_STORAGE_BUCKET_NAME: !Ref StaticFilesBucket
+
+          # CORS & CSRF
+          CORS_ALLOWED_ORIGINS: https://carlosleon.tech,https://www.carlosleon.tech
+          CSRF_TRUSTED_ORIGINS: !Sub https://${DomainName}
+
+          # Email & Notifications
+          SENDGRID_API_KEY: !Ref SendGridApiKey
+          DEFAULT_FROM_EMAIL: noreply@carlosleon.tech
+          EMAIL_BACKEND: sendgrid_backend.SendgridBackend
+          SITE_URL: https://carlosleon.tech
+          SLACK_WEBHOOK_URL: !Ref SlackWebhookUrl
+
+      Events:
+        ApiRoot:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref HttpApi
+            Path: /
+            Method: ANY
+        ApiProxy:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref HttpApi
+            Path: /{proxy+}
+            Method: ANY
+
+      Policies:
+        - Version: '2012-10-17'
+          Statement:
+            # S3 access for static files
+            - Effect: Allow
+              Action:
+                - s3:GetObject
+                - s3:PutObject
+                - s3:DeleteObject
+                - s3:ListBucket
+              Resource:
+                - !Sub arn:aws:s3:::${StaticFilesBucket}
+                - !Sub arn:aws:s3:::${StaticFilesBucket}/*
+
+            # Secrets Manager access
+            - Effect: Allow
+              Action:
+                - secretsmanager:GetSecretValue
+              Resource:
+                - !Sub arn:aws:secretsmanager:${AWS::Region}:${AWS::AccountId}:secret:portfolio-backend-secrets-*
+
+            # CloudWatch Logs
+            - Effect: Allow
+              Action:
+                - logs:CreateLogGroup
+                - logs:CreateLogStream
+                - logs:PutLogEvents
+              Resource: '*'
+
+  # Lambda Security Group
+  LambdaSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Security group for Django Lambda function
+      VpcId: !Ref VpcId
+      SecurityGroupEgress:
+        - IpProtocol: tcp
+          FromPort: 5432
+          ToPort: 5432
+          Description: PostgreSQL access
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 443
+          ToPort: 443
+          Description: HTTPS for AWS services (S3, Secrets Manager, etc)
+          CidrIp: 0.0.0.0/0
+      Tags:
+        - Key: Name
+          Value: !Sub portfolio-lambda-sg-${Environment}
+
+  # HTTP API Gateway
+  HttpApi:
+    Type: AWS::Serverless::HttpApi
+    Properties:
+      StageName: !Ref Environment
+      CorsConfiguration:
+        AllowOrigins:
+          - https://carlosleon.tech
+          - https://www.carlosleon.tech
+        AllowHeaders:
+          - Content-Type
+          - Authorization
+          - X-Requested-With
+        AllowMethods:
+          - GET
+          - POST
+          - PUT
+          - DELETE
+          - OPTIONS
+        AllowCredentials: true
+        MaxAge: 600
+      DefaultRouteSettings:
+        ThrottlingBurstLimit: 200
+        ThrottlingRateLimit: 100
+
+  # Custom Domain for API Gateway
+  ApiDomainName:
+    Type: AWS::ApiGatewayV2::DomainName
+    Properties:
+      DomainName: !Ref DomainName
+      DomainNameConfigurations:
+        - EndpointType: REGIONAL
+          CertificateArn: !Ref CertificateArn
+
+  ApiMapping:
+    Type: AWS::ApiGatewayV2::ApiMapping
+    Properties:
+      DomainName: !Ref ApiDomainName
+      ApiId: !Ref HttpApi
+      Stage: !Ref HttpApi.Stage
+
+  # S3 Bucket for Static Files
+  StaticFilesBucketResource:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Ref StaticFilesBucket
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: false
+        BlockPublicPolicy: false
+        IgnorePublicAcls: false
+        RestrictPublicBuckets: false
+      CorsConfiguration:
+        CorsRules:
+          - AllowedOrigins:
+              - https://carlosleon.tech
+              - https://www.carlosleon.tech
+            AllowedMethods:
+              - GET
+              - HEAD
+            AllowedHeaders:
+              - '*'
+            MaxAge: 3600
+
+  StaticFilesBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref StaticFilesBucketResource
+      PolicyDocument:
+        Statement:
+          - Effect: Allow
+            Principal: '*'
+            Action: s3:GetObject
+            Resource: !Sub ${StaticFilesBucketResource.Arn}/*
+
+Outputs:
+  ApiUrl:
+    Description: API Gateway endpoint URL
+    Value: !Sub https://${HttpApi}.execute-api.${AWS::Region}.amazonaws.com/${Environment}/
+
+  CustomDomainUrl:
+    Description: Custom domain URL
+    Value: !Sub https://${DomainName}
+
+  LambdaFunctionArn:
+    Description: Lambda function ARN
+    Value: !GetAtt DjangoLambdaFunction.Arn
+
+  StaticFilesBucketName:
+    Description: S3 bucket for static files
+    Value: !Ref StaticFilesBucketResource
+
+  ApiDomainTarget:
+    Description: Target for Route 53 A record
+    Value: !GetAtt ApiDomainName.RegionalDomainName

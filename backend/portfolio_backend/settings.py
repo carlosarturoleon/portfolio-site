@@ -245,13 +245,18 @@ MARKDOWNX_MARKDOWN_EXTENSION_CONFIGS = {
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Email Configuration (Amazon SES)
-# Use console backend in DEBUG mode for development testing, SES in production
+# Email Configuration
+# Use console backend in DEBUG mode for development testing
+# Use SendGrid (or SES) in production based on EMAIL_BACKEND setting
 if DEBUG:
     EMAIL_BACKEND = config('EMAIL_BACKEND', default='django.core.mail.backends.console.EmailBackend')
 else:
-    EMAIL_BACKEND = config('EMAIL_BACKEND', default='django_ses.SESBackend')
+    EMAIL_BACKEND = config('EMAIL_BACKEND', default='sendgrid_backend.SendgridBackend')
 
+# SendGrid Configuration (Production)
+SENDGRID_API_KEY = config('SENDGRID_API_KEY', default=None)
+
+# Legacy SES Configuration (kept for reference, can be removed later)
 # SES credentials configuration
 # Priority: 1) Environment variables, 2) AWS profile (local dev with volume mount)
 AWS_SES_ACCESS_KEY_ID = config('AWS_SES_ACCESS_KEY_ID', default=None)
@@ -274,9 +279,66 @@ if not AWS_SES_ACCESS_KEY_ID:
 # SES configuration
 AWS_SES_REGION_NAME = config('AWS_SES_REGION_NAME', default='us-east-2')
 AWS_SES_REGION_ENDPOINT = config('AWS_SES_REGION_ENDPOINT', default='email.us-east-2.amazonaws.com')
+
+# Email Settings (common for all backends)
 DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL', default='noreply@carlosleon.tech')
 # SES throttling (None = disabled)
 AWS_SES_AUTO_THROTTLE = config('AWS_SES_AUTO_THROTTLE', default=None)
 
+# Site Configuration
+SITE_URL = config('SITE_URL', default='https://carlosleon.tech')
+
 # Slack Configuration
 SLACK_WEBHOOK_URL = config('SLACK_WEBHOOK_URL', default=None)
+
+# ===== LAMBDA CONFIGURATION =====
+# Detect if running in AWS Lambda environment
+IS_LAMBDA = os.environ.get('AWS_LAMBDA_FUNCTION_NAME') is not None
+
+if IS_LAMBDA:
+    print("Running in AWS Lambda environment")
+
+    # S3 Static Files Configuration for Lambda
+    AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME', default='portfolio-static-files')
+    AWS_S3_REGION_NAME = AWS_REGION
+    AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+    AWS_S3_OBJECT_PARAMETERS = {
+        'CacheControl': 'max-age=86400',  # 1 day cache
+    }
+
+    # Use S3 for static files in Lambda (can't use local filesystem)
+    STORAGES = {
+        "default": {
+            "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
+        },
+        "staticfiles": {
+            "BACKEND": "storages.backends.s3boto3.S3StaticStorage",
+        },
+    }
+
+    STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/static/'
+    MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
+
+    # Lambda database connection settings
+    # Don't persist connections in Lambda (each invocation is stateless)
+    DATABASES['default']['CONN_MAX_AGE'] = 0
+    DATABASES['default']['OPTIONS'] = {
+        'connect_timeout': 3,  # Fast timeout for Lambda
+        'options': '-c statement_timeout=30000'  # 30 second query timeout
+    }
+
+    # Disable Django debug toolbar in Lambda
+    if 'debug_toolbar' in INSTALLED_APPS:
+        INSTALLED_APPS.remove('debug_toolbar')
+
+    # Use in-memory cache for Lambda (each instance is isolated)
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+            'LOCATION': 'unique-snowflake',
+        }
+    }
+
+    print(f"Lambda configuration loaded - Static URL: {STATIC_URL}")
+else:
+    print("Running in container/local environment")

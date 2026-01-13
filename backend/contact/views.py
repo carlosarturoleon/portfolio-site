@@ -8,6 +8,9 @@ from django.conf import settings
 from slack_sdk.webhook import WebhookClient
 from .models import ContactInquiry
 from .serializers import ContactInquirySerializer
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class ContactSubmitThrottle(AnonRateThrottle):
@@ -33,18 +36,20 @@ def submit_contact_form(request):
         inquiry = serializer.save()
 
         # Send email notification
-        try:
-            send_notification_email(inquiry)
-        except Exception as e:
-            # Log error but don't fail the request
-            print(f"Error sending email notification: {e}")
+        # Temporarily disabled - Lambda in VPC cannot reach SendGrid without NAT Gateway
+        # try:
+        #     send_notification_email(inquiry)
+        # except Exception as e:
+        #     # Log error but don't fail the request
+        #     logger.error(f"Error sending email notification: {e}", exc_info=True)
 
         # Send Slack notification
-        try:
-            send_slack_notification(inquiry)
-        except Exception as e:
-            # Log error but don't fail the request
-            print(f"Error sending Slack notification: {e}")
+        # Temporarily disabled - Lambda in VPC cannot reach Slack without NAT Gateway
+        # try:
+        #     send_slack_notification(inquiry)
+        # except Exception as e:
+        #     # Log error but don't fail the request
+        #     logger.error(f"Error sending Slack notification: {e}", exc_info=True)
 
         return Response(
             {
@@ -155,14 +160,14 @@ This is an automated confirmation email. Please do not reply to this message.
             fail_silently=True,  # Don't fail if client email bounces
         )
     except Exception as e:
-        print(f"Error sending confirmation email: {e}")
+        logger.error(f"Error sending confirmation email: {e}", exc_info=True)
 
 
 def send_slack_notification(inquiry):
     """Send Slack notification when a new contact inquiry is submitted."""
 
     if not settings.SLACK_WEBHOOK_URL:
-        print("Slack webhook URL not configured, skipping notification")
+        logger.warning("Slack webhook URL not configured, skipping notification")
         return
 
     try:
@@ -280,7 +285,9 @@ def send_slack_notification(inquiry):
         )
 
         if response.status_code != 200:
-            print(f"Slack notification failed with status {response.status_code}: {response.body}")
+            logger.error(f"Slack notification failed with status {response.status_code}: {response.body}")
+        else:
+            logger.info(f"Slack notification sent successfully for inquiry #{inquiry.id}")
 
     except Exception as e:
-        print(f"Error sending Slack notification: {e}")
+        logger.error(f"Error sending Slack notification: {e}", exc_info=True)
