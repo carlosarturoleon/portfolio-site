@@ -28,7 +28,7 @@ exec gunicorn portfolio_backend.wsgi:application \
     --workers 2 \
     --threads 4 \
     --worker-class gthread \
-    --bind 0.0.0.0:8000 \
+    --bind 0.0.0.0:${PORT:-8000} \
     --timeout 60 \
     --access-logfile - \
     --error-logfile -
