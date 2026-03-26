@@ -14,8 +14,6 @@ from pathlib import Path
 from decouple import config
 import os
 import environ
-import boto3
-import json
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,43 +25,6 @@ env = environ.Env()
 env_file = os.path.join(BASE_DIR.parent, '.env')
 if os.path.exists(env_file):
     environ.Env.read_env(env_file)
-
-# Fetch secrets from AWS Secrets Manager
-def get_aws_secrets():
-    """Fetch secrets from AWS Secrets Manager"""
-    try:
-        secret_name = config('SECRET_MANAGER_NAME', default=None)
-        region_name = config('AWS_REGION', default='us-east-1')
-
-        if not secret_name:
-            return {}
-
-        # Create a Secrets Manager client
-        session = boto3.session.Session()
-        client = session.client(
-            service_name='secretsmanager',
-            region_name=region_name
-        )
-
-        # Fetch the secret value
-        get_secret_value_response = client.get_secret_value(SecretId=secret_name)
-
-        # Parse and return the secret
-        if 'SecretString' in get_secret_value_response:
-            secret = json.loads(get_secret_value_response['SecretString'])
-            return secret
-        return {}
-    except Exception as e:
-        print(f"Error fetching secrets from AWS Secrets Manager: {e}")
-        return {}
-
-# Get AWS credentials from Secrets Manager
-aws_secrets = get_aws_secrets()
-
-# AWS Configuration
-AWS_ACCESS_KEY_ID = aws_secrets.get('AWS_ACCESS_KEY_ID', config('AWS_ACCESS_KEY_ID', default=''))
-AWS_SECRET_ACCESS_KEY = aws_secrets.get('AWS_SECRET_ACCESS_KEY', config('AWS_SECRET_ACCESS_KEY', default=''))
-AWS_REGION = config('AWS_REGION', default='us-east-1')
 
 
 # Quick-start development settings - unsuitable for production
@@ -92,7 +53,6 @@ INSTALLED_APPS = [
     'corsheaders',
     'django_filters',
     'markdownx',
-    'django_ses',
     'blog',
     'newsletter',
     'contact',
@@ -245,38 +205,15 @@ MARKDOWNX_MARKDOWN_EXTENSION_CONFIGS = {
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Email Configuration (Amazon SES)
-# Use console backend in DEBUG mode for development testing, SES in production
+# Email Configuration
+# Use console backend in DEBUG mode for development testing, SendGrid in production
 if DEBUG:
     EMAIL_BACKEND = config('EMAIL_BACKEND', default='django.core.mail.backends.console.EmailBackend')
 else:
-    EMAIL_BACKEND = config('EMAIL_BACKEND', default='django_ses.SESBackend')
+    EMAIL_BACKEND = config('EMAIL_BACKEND', default='sendgrid_backend.SendgridBackend')
 
-# SES credentials configuration
-# Priority: 1) Environment variables, 2) AWS profile (local dev with volume mount)
-AWS_SES_ACCESS_KEY_ID = config('AWS_SES_ACCESS_KEY_ID', default=None)
-AWS_SES_SECRET_ACCESS_KEY = config('AWS_SES_SECRET_ACCESS_KEY', default=None)
-
-# If no env credentials, try AWS profile (only works with ~/.aws volume mount)
-if not AWS_SES_ACCESS_KEY_ID:
-    AWS_SES_PROFILE = config('AWS_SES_PROFILE', default=None)
-    if AWS_SES_PROFILE:
-        try:
-            import boto3
-            ses_session = boto3.Session(profile_name=AWS_SES_PROFILE)
-            ses_credentials = ses_session.get_credentials()
-            if ses_credentials:
-                AWS_SES_ACCESS_KEY_ID = ses_credentials.access_key
-                AWS_SES_SECRET_ACCESS_KEY = ses_credentials.secret_key
-        except Exception as e:
-            print(f"Warning: Could not load SES credentials from profile '{AWS_SES_PROFILE}': {e}")
-
-# SES configuration
-AWS_SES_REGION_NAME = config('AWS_SES_REGION_NAME', default='us-east-2')
-AWS_SES_REGION_ENDPOINT = config('AWS_SES_REGION_ENDPOINT', default='email.us-east-2.amazonaws.com')
+SENDGRID_API_KEY = config('SENDGRID_API_KEY', default='')
 DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL', default='noreply@carlosleon.tech')
-# SES throttling (None = disabled)
-AWS_SES_AUTO_THROTTLE = config('AWS_SES_AUTO_THROTTLE', default=None)
 
 # Slack Configuration
 SLACK_WEBHOOK_URL = config('SLACK_WEBHOOK_URL', default=None)
