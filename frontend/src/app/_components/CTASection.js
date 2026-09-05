@@ -1,30 +1,6 @@
-'use client';
-
-import { useState } from 'react';
 import Button from './Button';
 
 export default function CTASection({ spacing }) {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: '',
-  });
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Handle form submission - placeholder for now
-    console.log('Form submitted:', formData);
-    // Reset form
-    setFormData({ name: '', email: '', message: '' });
-  };
-
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
-
   return (
     <section className={spacing}>
       <div className="max-w-4xl mx-auto text-center">
