@@ -1,6 +1,6 @@
 # Carlos Leon — Portfolio Site
 
-Production portfolio site at [carlosleon.tech](https://carlosleon.tech) — a decoupled Next.js frontend and Django REST API, deployed independently and talking over HTTPS.
+Production portfolio site at [carlosleon.tech](https://carlosleon.tech) a decoupled Next.js frontend and Django REST API, deployed independently and talking over HTTPS.
 
 ## Stack
 
@@ -15,10 +15,9 @@ Production portfolio site at [carlosleon.tech](https://carlosleon.tech) — a de
 
 ## Features
 
-- **Blog** — Markdown content via `django-markdownx`, categories/tags, full-text search (Postgres GIN index), view counts
-- **Newsletter** — double opt-in subscription flow with UUID confirmation tokens
-- **Contact** — structured lead-capture form with automatic high-value lead detection, Slack + email notifications
-- **Rate limiting** — per-endpoint DRF throttling in production
+- **Blog** — Markdown content via `django-markdownx`, categories/tags, full text search (Postgres GIN index), view counts
+- **Contact** — structured lead capture form with automatic high value lead detection, Slack + email notifications
+- **Rate limiting** per endpoint DRF throttling in production
 - Independent CI/CD: pushing to `main` auto-deploys the frontend (Vercel) and backend (Railway) separately
 
 See [architecture-enhanced.md](architecture-enhanced.md) for a full architecture diagram and technical writeup.
@@ -54,4 +53,4 @@ Or run the full stack (Postgres + Django) with Docker:
 docker-compose up
 ```
 
-Copy `backend/.env.production.example` to `backend/.env` (or a root `.env`) and fill in real values for local configuration — `SECRET_KEY`, database credentials, and any third-party API keys are required, not optional.
+Copy `backend/.env.production.example` to `backend/.env` (or a root `.env`) and fill in real values for local configuration `SECRET_KEY`, database credentials, and any third party API keys are required, not optional.
